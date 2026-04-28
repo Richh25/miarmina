@@ -19,18 +19,62 @@
       },
       remove: function () { clearInterval(this.interval); }
     });
+
+    AFRAME.registerComponent('text-drop', {
+      init: function () {
+        var scene = this.el.sceneEl;
+        scene.addEventListener('loaded', function () {
+
+          var line1 = document.querySelector('#line1');
+          var line2 = document.querySelector('#line2');
+          var line3 = document.querySelector('#line3');
+          var heart1 = document.querySelector('#heart1');
+          var heart2 = document.querySelector('#heart2');
+
+          function dropIn(el, fromY, toY, delay) {
+            setTimeout(function () {
+              el.setAttribute('opacity', '1');
+              el.setAttribute('position', '0 ' + fromY + ' 0');
+              el.setAttribute('animation__drop', {
+                property: 'position',
+                from: '0 ' + fromY + ' 0',
+                to: '0 ' + toY + ' 0',
+                dur: 600,
+                easing: 'easeOutBounce'
+              });
+              setTimeout(function () {
+                el.setAttribute('animation__float', {
+                  property: 'position',
+                  from: '0 ' + toY + ' 0',
+                  to: '0 ' + (toY + 0.08) + ' 0',
+                  dir: 'alternate',
+                  loop: true,
+                  dur: 1200,
+                  easing: 'easeInOutSine'
+                });
+              }, 650);
+            }, delay);
+          }
+
+          dropIn(line1, 2.2, 1.25, 500);
+          dropIn(line2, 2.2, 0.98, 900);
+          dropIn(line3, 2.2, 0.70, 1300);
+
+          setTimeout(function () {
+            heart1.setAttribute('opacity', '1');
+            heart2.setAttribute('opacity', '1');
+          }, 1800);
+        });
+      }
+    });
   </script>
 </head>
 <body style="margin:0;overflow:hidden;">
-<a-scene embedded arjs="sourceType: webcam;">
+<a-scene embedded arjs="sourceType: webcam;" text-drop>
 <a-marker type="pattern" url="pattern-SR.patt">
 
-  <!-- Contenedor principal -->
-  <a-entity leg-wave
-    animation__walk="property:position; from:-0.45 0 0; to:0.45 0 0;
-      dir:alternate; loop:true; dur:2800; easing:easeInOutSine"
-    animation__turn="property:rotation; from:0 -90 0; to:0 90 0;
-      dir:alternate; loop:true; dur:2800; easing:easeInOutSine">
+  <!-- Susuwatari quieto con animaciones -->
+  <a-entity leg-wave>
 
     <!-- SOMBRA -->
     <a-circle position="0 0.01 0" radius="0.3"
@@ -41,48 +85,48 @@
     <a-sphere position="0 0.32 0" radius="0.3"
       color="#0d0d0d" roughness="1"
       animation__bounce="property:position; from:0 0.30 0; to:0 0.35 0;
-        dir:alternate; loop:true; dur:380; easing:easeInOutSine">
+        dir:alternate; loop:true; dur:400; easing:easeInOutSine">
     </a-sphere>
 
-    <!-- PELITOS alrededor -->
-    <a-sphere position="0.27 0.32 0"     radius="0.09" color="#111"></a-sphere>
-    <a-sphere position="-0.27 0.32 0"    radius="0.09" color="#111"></a-sphere>
-    <a-sphere position="0.23 0.46 0.05"  radius="0.08" color="#0f0f0f"></a-sphere>
-    <a-sphere position="-0.23 0.46 0.05" radius="0.08" color="#0f0f0f"></a-sphere>
-    <a-sphere position="0.2 0.17 0.08"   radius="0.08" color="#111"></a-sphere>
-    <a-sphere position="-0.2 0.17 0.08"  radius="0.08" color="#111"></a-sphere>
-    <a-sphere position="0.07 0.57 0.05"  radius="0.08" color="#0d0d0d"></a-sphere>
-    <a-sphere position="-0.07 0.57 0.05" radius="0.08" color="#0d0d0d"></a-sphere>
-    <a-sphere position="0 0.09 0.18"     radius="0.07" color="#111"></a-sphere>
-    <a-sphere position="0.17 0.32 0.22"  radius="0.07" color="#0f0f0f"></a-sphere>
-    <a-sphere position="-0.17 0.32 0.22" radius="0.07" color="#0f0f0f"></a-sphere>
-    <a-sphere position="0 0.32 -0.25"    radius="0.08" color="#111"></a-sphere>
+    <!-- PELITOS -->
+    <a-sphere position="0.27 0.32 0"      radius="0.09" color="#111"></a-sphere>
+    <a-sphere position="-0.27 0.32 0"     radius="0.09" color="#111"></a-sphere>
+    <a-sphere position="0.23 0.46 0.05"   radius="0.08" color="#0f0f0f"></a-sphere>
+    <a-sphere position="-0.23 0.46 0.05"  radius="0.08" color="#0f0f0f"></a-sphere>
+    <a-sphere position="0.2 0.17 0.08"    radius="0.08" color="#111"></a-sphere>
+    <a-sphere position="-0.2 0.17 0.08"   radius="0.08" color="#111"></a-sphere>
+    <a-sphere position="0.07 0.57 0.05"   radius="0.08" color="#0d0d0d"></a-sphere>
+    <a-sphere position="-0.07 0.57 0.05"  radius="0.08" color="#0d0d0d"></a-sphere>
+    <a-sphere position="0 0.09 0.18"      radius="0.07" color="#111"></a-sphere>
+    <a-sphere position="0.17 0.32 0.22"   radius="0.07" color="#0f0f0f"></a-sphere>
+    <a-sphere position="-0.17 0.32 0.22"  radius="0.07" color="#0f0f0f"></a-sphere>
+    <a-sphere position="0 0.32 -0.25"     radius="0.08" color="#111"></a-sphere>
 
     <!-- OJO izquierdo -->
-    <a-sphere position="-0.11 0.36 0.26" radius="0.095" color="white"></a-sphere>
-    <a-sphere position="-0.10 0.36 0.34" radius="0.062" color="#080808"></a-sphere>
-    <a-sphere position="-0.08 0.38 0.37" radius="0.022" color="white"></a-sphere>
+    <a-sphere position="-0.11 0.36 0.26"  radius="0.095" color="white"></a-sphere>
+    <a-sphere position="-0.10 0.36 0.34"  radius="0.062" color="#080808"></a-sphere>
+    <a-sphere position="-0.08 0.38 0.37"  radius="0.022" color="white"></a-sphere>
 
     <!-- OJO derecho -->
-    <a-sphere position="0.11 0.36 0.26"  radius="0.095" color="white"></a-sphere>
-    <a-sphere position="0.12 0.36 0.34"  radius="0.062" color="#080808"></a-sphere>
-    <a-sphere position="0.14 0.38 0.37"  radius="0.022" color="white"></a-sphere>
+    <a-sphere position="0.11 0.36 0.26"   radius="0.095" color="white"></a-sphere>
+    <a-sphere position="0.12 0.36 0.34"   radius="0.062" color="#080808"></a-sphere>
+    <a-sphere position="0.14 0.38 0.37"   radius="0.022" color="white"></a-sphere>
 
-    <!-- 2 BRACITOS muy delgados -->
+    <!-- 2 BRACITOS delgados -->
     <a-cylinder position="-0.32 0.38 0.08"
       radius="0.018" height="0.22" color="#0a0a0a"
       rotation="0 0 40"
-      animation="property:rotation; from:0 0 30; to:0 0 50;
+      animation="property:rotation; from:0 0 25; to:0 0 55;
         dir:alternate; loop:true; dur:500; easing:easeInOutSine">
     </a-cylinder>
     <a-cylinder position="0.32 0.38 0.08"
       radius="0.018" height="0.22" color="#0a0a0a"
       rotation="0 0 -40"
-      animation="property:rotation; from:0 0 -30; to:0 0 -50;
+      animation="property:rotation; from:0 0 -25; to:0 0 -55;
         dir:alternate; loop:true; dur:500; easing:easeInOutSine">
     </a-cylinder>
 
-    <!-- 2 PATITAS muy delgadas -->
+    <!-- 2 PATITAS delgadas -->
     <a-cylinder id="leg0" position="-0.12 0.05 0"
       radius="0.018" height="0.16" color="#0a0a0a">
     </a-cylinder>
@@ -90,93 +134,75 @@
       radius="0.018" height="0.16" color="#0a0a0a">
     </a-cylinder>
 
-    <!-- ROSA que sostiene (brazo derecho) -->
+    <!-- ROSA -->
     <a-entity position="0.44 0.44 0.08"
       animation__aparecer="property:scale; from:0 0 0; to:1 1 1;
-        delay:1200; dur:700; easing:easeOutElastic"
+        delay:1000; dur:700; easing:easeOutElastic"
       animation__flotar="property:position; from:0.44 0.44 0.08; to:0.44 0.52 0.08;
         dir:alternate; loop:true; dur:1100; easing:easeInOutSine">
-
-      <!-- Tallo -->
-      <a-cylinder position="0 -0.1 0"
-        radius="0.012" height="0.2" color="#2e7d32">
-      </a-cylinder>
-
-      <!-- Petalo base (grande) -->
-      <a-sphere position="0 0.04 0"
-        radius="0.07" color="#e53935"
-        scale="1 0.7 1">
-      </a-sphere>
-
-      <!-- Petalos alrededor -->
-      <a-sphere position="0.06 0.06 0"
-        radius="0.05" color="#ef5350" scale="1 0.6 1">
-      </a-sphere>
-      <a-sphere position="-0.06 0.06 0"
-        radius="0.05" color="#ef5350" scale="1 0.6 1">
-      </a-sphere>
-      <a-sphere position="0 0.06 0.06"
-        radius="0.05" color="#e53935" scale="1 0.6 1">
-      </a-sphere>
-      <a-sphere position="0 0.06 -0.06"
-        radius="0.05" color="#e53935" scale="1 0.6 1">
-      </a-sphere>
-
-      <!-- Centro de la rosa -->
-      <a-sphere position="0 0.1 0"
-        radius="0.035" color="#b71c1c">
-      </a-sphere>
-
-      <!-- Hojitas del tallo -->
-      <a-sphere position="0.05 -0.05 0"
-        radius="0.035" color="#388e3c" scale="1.5 0.5 1" rotation="0 0 -30">
-      </a-sphere>
-      <a-sphere position="-0.05 -0.08 0"
-        radius="0.03" color="#388e3c" scale="1.5 0.5 1" rotation="0 0 30">
-      </a-sphere>
-
+      <a-cylinder position="0 -0.1 0" radius="0.012" height="0.2" color="#2e7d32"></a-cylinder>
+      <a-sphere position="0 0.04 0"   radius="0.07"  color="#e53935" scale="1 0.7 1"></a-sphere>
+      <a-sphere position="0.06 0.06 0"  radius="0.05" color="#ef5350" scale="1 0.6 1"></a-sphere>
+      <a-sphere position="-0.06 0.06 0" radius="0.05" color="#ef5350" scale="1 0.6 1"></a-sphere>
+      <a-sphere position="0 0.06 0.06"  radius="0.05" color="#e53935" scale="1 0.6 1"></a-sphere>
+      <a-sphere position="0 0.06 -0.06" radius="0.05" color="#e53935" scale="1 0.6 1"></a-sphere>
+      <a-sphere position="0 0.1 0"      radius="0.035" color="#b71c1c"></a-sphere>
+      <a-sphere position="0.05 -0.05 0" radius="0.035" color="#388e3c" scale="1.5 0.5 1" rotation="0 0 -30"></a-sphere>
+      <a-sphere position="-0.05 -0.08 0" radius="0.03" color="#388e3c" scale="1.5 0.5 1" rotation="0 0 30"></a-sphere>
     </a-entity>
 
   </a-entity>
 
-  <!-- TEXTO FLOTANTE -->
-  <a-text value="¿Quieres ser"
-    position="0 1.25 0" align="center"
-    color="#FF69B4" width="2.6" opacity="0"
-    animation__show="property:opacity; from:0; to:1; delay:600; dur:900"
-    animation__up="property:position; from:0 1.25 0; to:0 1.35 0;
-      dir:alternate; loop:true; dur:1300; easing:easeInOutSine">
+  <!-- TEXTO con caida y rebote -->
+  <a-text id="line1"
+    value="¿Quieres ser"
+    position="0 2.2 0"
+    align="center"
+    color="#FF1493"
+    width="3.0"
+    opacity="0"
+    font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+    shader="msdf">
   </a-text>
 
-  <a-text value="mi novia"
-    position="0 1.02 0" align="center"
-    color="#FF1493" width="3.0" opacity="0"
-    animation__show="property:opacity; from:0; to:1; delay:1000; dur:900"
-    animation__up="property:position; from:0 1.02 0; to:0 1.12 0;
-      dir:alternate; loop:true; dur:1300; easing:easeInOutSine">
+  <a-text id="line2"
+    value="mi novia"
+    position="0 2.2 0"
+    align="center"
+    color="#FF69B4"
+    width="3.5"
+    opacity="0"
+    font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+    shader="msdf">
   </a-text>
 
-  <a-text value="ARMIÑA ?"
-    position="0 0.78 0" align="center"
-    color="#FF0066" width="3.4" opacity="0"
-    animation__show="property:opacity; from:0; to:1; delay:1400; dur:900"
-    animation__up="property:position; from:0 0.78 0; to:0 0.88 0;
-      dir:alternate; loop:true; dur:1300; easing:easeInOutSine"
-    animation__pulse="property:scale; from:1 1 1; to:1.2 1.2 1.2;
-      dir:alternate; loop:true; dur:700">
+  <a-text id="line3"
+    value="ARMIÑA ?"
+    position="0 2.2 0"
+    align="center"
+    color="#ffffff"
+    width="4.0"
+    opacity="0"
+    font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+    shader="msdf"
+    animation__pulse="property:scale; from:1 1 1; to:1.25 1.25 1.25;
+      dir:alternate; loop:true; dur:650; easing:easeInOutSine">
   </a-text>
 
-  <a-text value="♥" position="-0.7 1.02 0"
-    color="#FF69B4" width="1.6" align="center" opacity="0"
-    animation__show="property:opacity; from:0; to:1; delay:1800; dur:500"
-    animation__beat="property:scale; from:1 1 1; to:1.5 1.5 1.5;
+  <!-- CORAZONES laterales -->
+  <a-text id="heart1" value="♥"
+    position="-0.7 1.0 0"
+    color="#FF1493" width="1.8"
+    align="center" opacity="0"
+    animation__beat="property:scale; from:1 1 1; to:1.6 1.6 1.6;
       dir:alternate; loop:true; dur:500">
   </a-text>
 
-  <a-text value="♥" position="0.7 1.02 0"
-    color="#FF69B4" width="1.6" align="center" opacity="0"
-    animation__show="property:opacity; from:0; to:1; delay:2000; dur:500"
-    animation__beat="property:scale; from:1.5 1.5 1.5; to:1 1 1;
+  <a-text id="heart2" value="♥"
+    position="0.7 1.0 0"
+    color="#FF1493" width="1.8"
+    align="center" opacity="0"
+    animation__beat="property:scale; from:1.6 1.6 1.6; to:1 1 1;
       dir:alternate; loop:true; dur:500">
   </a-text>
 
