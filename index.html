@@ -7,123 +7,80 @@
 </head>
 <body style="margin:0; overflow:hidden;">
 <a-scene embedded arjs="sourceType: webcam;">
-<a-marker type="pattern" url="patter-SR.patt">
+  <a-assets>
+    <a-asset-item id="susuwatari" src="scene.gltf"></a-asset-item>
+  </a-assets>
 
-  <a-entity id="soot"
-    position="0 0 0"
-    animation__walk="property: position;
-      from: -0.4 0 0; to: 0.4 0 0;
-      dir: alternate; loop: true;
-      dur: 2500; easing: easeInOutSine"
-    animation__rotate="property: rotation;
-      from: 0 -90 0; to: 0 90 0;
-      dir: alternate; loop: true;
-      dur: 2500; easing: easeInOutSine">
+  <a-marker type="pattern" url="pattern-SR.patt">
 
-    <!-- CUERPO -->
-    <a-sphere position="0 0.28 0"
-      radius="0.28" color="#111111">
-    </a-sphere>
+    <a-entity
+      gltf-model="#susuwatari"
+      position="0 0 0"
+      scale="0.5 0.5 0.5"
+      animation-mixer
+      animation__walk="property: position;
+        from: -0.4 0 0; to: 0.4 0 0;
+        dir: alternate; loop: true;
+        dur: 2500; easing: easeInOutSine"
+      animation__rotate="property: rotation;
+        from: 0 -90 0; to: 0 90 0;
+        dir: alternate; loop: true;
+        dur: 2500; easing: easeInOutSine">
+    </a-entity>
 
-    <!-- PELITOS -->
-    <a-sphere position="0.22 0.38 0.1"   radius="0.07" color="#1a1a1a"></a-sphere>
-    <a-sphere position="-0.22 0.38 0.1"  radius="0.07" color="#1a1a1a"></a-sphere>
-    <a-sphere position="0.25 0.25 0"     radius="0.06" color="#1a1a1a"></a-sphere>
-    <a-sphere position="-0.25 0.25 0"    radius="0.06" color="#1a1a1a"></a-sphere>
-    <a-sphere position="0.18 0.45 0"     radius="0.06" color="#222222"></a-sphere>
-    <a-sphere position="-0.18 0.45 0"    radius="0.06" color="#222222"></a-sphere>
-    <a-sphere position="0 0.52 0.1"      radius="0.07" color="#1a1a1a"></a-sphere>
-    <a-sphere position="0.1 0.52 -0.1"   radius="0.05" color="#222222"></a-sphere>
-    <a-sphere position="-0.1 0.52 -0.1"  radius="0.05" color="#222222"></a-sphere>
-    <a-sphere position="0.22 0.15 0.1"   radius="0.06" color="#1a1a1a"></a-sphere>
-    <a-sphere position="-0.22 0.15 0.1"  radius="0.06" color="#1a1a1a"></a-sphere>
-    <a-sphere position="0 0.1 0.2"       radius="0.06" color="#222222"></a-sphere>
-    <a-sphere position="0.15 0.28 0.22"  radius="0.05" color="#1a1a1a"></a-sphere>
-    <a-sphere position="-0.15 0.28 0.22" radius="0.05" color="#1a1a1a"></a-sphere>
+    <a-text value="¿Quieres ser"
+      position="0 1.2 0" align="center"
+      color="#FF69B4" width="2.5" opacity="0"
+      animation__aparecer="property: opacity;
+        from: 0; to: 1; delay: 800; dur: 1000"
+      animation__flotar="property: position;
+        from: 0 1.2 0; to: 0 1.3 0;
+        dir: alternate; loop: true; dur: 1200">
+    </a-text>
 
-    <!-- OJOS -->
-    <a-sphere position="-0.1 0.33 0.24"  radius="0.085" color="white"></a-sphere>
-    <a-sphere position="0.1 0.33 0.24"   radius="0.085" color="white"></a-sphere>
-    <a-sphere position="-0.09 0.33 0.32" radius="0.055" color="#111111"></a-sphere>
-    <a-sphere position="0.11 0.33 0.32"  radius="0.055" color="#111111"></a-sphere>
-    <a-sphere position="-0.07 0.35 0.35" radius="0.02"  color="white"></a-sphere>
-    <a-sphere position="0.13 0.35 0.35"  radius="0.02"  color="white"></a-sphere>
+    <a-text value="mi novia"
+      position="0 1.0 0" align="center"
+      color="#FF1493" width="2.8" opacity="0"
+      animation__aparecer="property: opacity;
+        from: 0; to: 1; delay: 1200; dur: 1000"
+      animation__flotar="property: position;
+        from: 0 1.0 0; to: 0 1.1 0;
+        dir: alternate; loop: true; dur: 1200">
+    </a-text>
 
-    <!-- 6 PATITAS -->
-    <a-cylinder position="-0.16 0.05 0.14"  radius="0.035" height="0.14" color="#0d0d0d"
-      animation="property: rotation; from: -25 0 0; to: 25 0 0;
-        dir: alternate; loop: true; dur: 220"></a-cylinder>
-    <a-cylinder position="0.16 0.05 0.14"   radius="0.035" height="0.14" color="#0d0d0d"
-      animation="property: rotation; from: 25 0 0; to: -25 0 0;
-        dir: alternate; loop: true; dur: 220"></a-cylinder>
-    <a-cylinder position="-0.19 0.05 0"     radius="0.035" height="0.14" color="#0d0d0d"
-      animation="property: rotation; from: 25 0 0; to: -25 0 0;
-        dir: alternate; loop: true; dur: 220"></a-cylinder>
-    <a-cylinder position="0.19 0.05 0"      radius="0.035" height="0.14" color="#0d0d0d"
-      animation="property: rotation; from: -25 0 0; to: 25 0 0;
-        dir: alternate; loop: true; dur: 220"></a-cylinder>
-    <a-cylinder position="-0.16 0.05 -0.14" radius="0.035" height="0.14" color="#0d0d0d"
-      animation="property: rotation; from: -25 0 0; to: 25 0 0;
-        dir: alternate; loop: true; dur: 220"></a-cylinder>
-    <a-cylinder position="0.16 0.05 -0.14"  radius="0.035" height="0.14" color="#0d0d0d"
-      animation="property: rotation; from: 25 0 0; to: -25 0 0;
-        dir: alternate; loop: true; dur: 220"></a-cylinder>
+    <a-text value="ARMIÑA ?"
+      position="0 0.78 0" align="center"
+      color="#FF0066" width="3.2" opacity="0"
+      animation__aparecer="property: opacity;
+        from: 0; to: 1; delay: 1600; dur: 1000"
+      animation__flotar="property: position;
+        from: 0 0.78 0; to: 0 0.88 0;
+        dir: alternate; loop: true; dur: 1200"
+      animation__pulso="property: scale;
+        from: 1 1 1; to: 1.15 1.15 1.15;
+        dir: alternate; loop: true; dur: 800">
+    </a-text>
 
-  </a-entity>
+    <a-text value="♥" position="-0.65 1.0 0"
+      color="#FF69B4" width="1.5" align="center" opacity="0"
+      animation__aparecer="property: opacity;
+        from: 0; to: 0.9; delay: 2000; dur: 600"
+      animation__latir="property: scale;
+        from: 1 1 1; to: 1.4 1.4 1.4;
+        dir: alternate; loop: true; dur: 550">
+    </a-text>
 
-  <!-- TEXTO -->
-  <a-text value="¿Quieres ser"
-    position="0 1.2 0" align="center"
-    color="#FF69B4" width="2.5" opacity="0"
-    animation__aparecer="property: opacity;
-      from: 0; to: 1; delay: 800; dur: 1000"
-    animation__flotar="property: position;
-      from: 0 1.2 0; to: 0 1.3 0;
-      dir: alternate; loop: true; dur: 1200">
-  </a-text>
+    <a-text value="♥" position="0.65 1.0 0"
+      color="#FF69B4" width="1.5" align="center" opacity="0"
+      animation__aparecer="property: opacity;
+        from: 0; to: 0.9; delay: 2200; dur: 600"
+      animation__latir="property: scale;
+        from: 1.4 1.4 1.4; to: 1 1 1;
+        dir: alternate; loop: true; dur: 550">
+    </a-text>
 
-  <a-text value="mi novia"
-    position="0 1.0 0" align="center"
-    color="#FF1493" width="2.8" opacity="0"
-    animation__aparecer="property: opacity;
-      from: 0; to: 1; delay: 1200; dur: 1000"
-    animation__flotar="property: position;
-      from: 0 1.0 0; to: 0 1.1 0;
-      dir: alternate; loop: true; dur: 1200">
-  </a-text>
-
-  <a-text value="ARMIÑA ?"
-    position="0 0.78 0" align="center"
-    color="#FF0066" width="3.2" opacity="0"
-    animation__aparecer="property: opacity;
-      from: 0; to: 1; delay: 1600; dur: 1000"
-    animation__flotar="property: position;
-      from: 0 0.78 0; to: 0 0.88 0;
-      dir: alternate; loop: true; dur: 1200"
-    animation__pulso="property: scale;
-      from: 1 1 1; to: 1.15 1.15 1.15;
-      dir: alternate; loop: true; dur: 800">
-  </a-text>
-
-  <a-text value="♥" position="-0.65 1.0 0"
-    color="#FF69B4" width="1.5" align="center" opacity="0"
-    animation__aparecer="property: opacity;
-      from: 0; to: 0.9; delay: 2000; dur: 600"
-    animation__latir="property: scale;
-      from: 1 1 1; to: 1.4 1.4 1.4;
-      dir: alternate; loop: true; dur: 550">
-  </a-text>
-  <a-text value="♥" position="0.65 1.0 0"
-    color="#FF69B4" width="1.5" align="center" opacity="0"
-    animation__aparecer="property: opacity;
-      from: 0; to: 0.9; delay: 2200; dur: 600"
-    animation__latir="property: scale;
-      from: 1.4 1.4 1.4; to: 1 1 1;
-      dir: alternate; loop: true; dur: 550">
-  </a-text>
-
-</a-marker>
-<a-entity camera></a-entity>
+  </a-marker>
+  <a-entity camera></a-entity>
 </a-scene>
 </body>
 </html>
