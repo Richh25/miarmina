@@ -4,83 +4,147 @@
   <title>AR - Susuwatari</title>
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+  <script>
+    AFRAME.registerComponent('susuwatari', {
+      init: function () {
+        var el = this.el;
+        var t = 0;
+        var legs = [];
+        for (var i = 0; i < 6; i++) legs.push(el.querySelector('#leg' + i));
+
+        this.el.sceneEl.addEventListener('loaded', function () {
+          setInterval(function () {
+            t += 0.15;
+            legs.forEach(function (leg, i) {
+              if (!leg) return;
+              var angle = Math.sin(t + i * 1.05) * 30;
+              leg.setAttribute('rotation', angle + ' 0 0');
+            });
+          }, 30);
+        });
+      }
+    });
+  </script>
 </head>
-<body style="margin:0; overflow:hidden;">
+<body style="margin:0;overflow:hidden;">
 <a-scene embedded arjs="sourceType: webcam;">
-  <a-assets>
-    <a-asset-item id="susuwatari" src="scene.gltf"></a-asset-item>
-  </a-assets>
+<a-marker type="pattern" url="pattern-SR.patt">
 
-  <a-marker type="pattern" url="pattern-SR.patt">
+  <!-- Contenedor que camina -->
+  <a-entity susuwatari
+    animation__walk="property:position; from:-0.5 0 0; to:0.5 0 0;
+      dir:alternate; loop:true; dur:2800; easing:easeInOutSine"
+    animation__turn="property:rotation; from:0 -90 0; to:0 90 0;
+      dir:alternate; loop:true; dur:2800; easing:easeInOutSine">
 
-    <a-entity
-      gltf-model="#susuwatari"
-      position="0 0 0"
-      scale="0.5 0.5 0.5"
-      animation-mixer
-      animation__walk="property: position;
-        from: -0.4 0 0; to: 0.4 0 0;
-        dir: alternate; loop: true;
-        dur: 2500; easing: easeInOutSine"
-      animation__rotate="property: rotation;
-        from: 0 -90 0; to: 0 90 0;
-        dir: alternate; loop: true;
-        dur: 2500; easing: easeInOutSine">
+    <!-- SOMBRA en el suelo -->
+    <a-circle position="0 0.01 0" radius="0.32"
+      color="#000000" opacity="0.25" rotation="-90 0 0">
+    </a-circle>
+
+    <!-- CUERPO principal -->
+    <a-sphere position="0 0.32 0" radius="0.3"
+      color="#0d0d0d" roughness="1" metalness="0"
+      animation__bounce="property:position; from:0 0.30 0; to:0 0.35 0;
+        dir:alternate; loop:true; dur:400; easing:easeInOutSine">
+    </a-sphere>
+
+    <!-- PELITOS laterales -->
+    <a-sphere position="0.27 0.32 0"    radius="0.09" color="#111111"></a-sphere>
+    <a-sphere position="-0.27 0.32 0"   radius="0.09" color="#111111"></a-sphere>
+    <a-sphere position="0.24 0.46 0.05" radius="0.08" color="#0f0f0f"></a-sphere>
+    <a-sphere position="-0.24 0.46 0.05" radius="0.08" color="#0f0f0f"></a-sphere>
+    <a-sphere position="0.2 0.18 0.08"  radius="0.08" color="#111111"></a-sphere>
+    <a-sphere position="-0.2 0.18 0.08" radius="0.08" color="#111111"></a-sphere>
+    <a-sphere position="0.08 0.56 0.05" radius="0.08" color="#0d0d0d"></a-sphere>
+    <a-sphere position="-0.08 0.56 0.05" radius="0.08" color="#0d0d0d"></a-sphere>
+    <a-sphere position="0 0.1 0.18"     radius="0.07" color="#111111"></a-sphere>
+    <a-sphere position="0.18 0.32 0.22" radius="0.07" color="#0f0f0f"></a-sphere>
+    <a-sphere position="-0.18 0.32 0.22" radius="0.07" color="#0f0f0f"></a-sphere>
+    <a-sphere position="0 0.32 -0.25"   radius="0.08" color="#111111"></a-sphere>
+    <a-sphere position="0.15 0.48 -0.15" radius="0.06" color="#0f0f0f"></a-sphere>
+    <a-sphere position="-0.15 0.48 -0.15" radius="0.06" color="#0f0f0f"></a-sphere>
+
+    <!-- OJO izquierdo -->
+    <a-sphere position="-0.11 0.36 0.26" radius="0.095" color="white"></a-sphere>
+    <a-sphere position="-0.1 0.36 0.34"  radius="0.062" color="#0a0a0a"></a-sphere>
+    <a-sphere position="-0.08 0.38 0.37" radius="0.022" color="white"></a-sphere>
+
+    <!-- OJO derecho -->
+    <a-sphere position="0.11 0.36 0.26"  radius="0.095" color="white"></a-sphere>
+    <a-sphere position="0.12 0.36 0.34"  radius="0.062" color="#0a0a0a"></a-sphere>
+    <a-sphere position="0.14 0.38 0.37"  radius="0.022" color="white"></a-sphere>
+
+    <!-- 6 PATITAS -->
+    <a-cylinder id="leg0" position="-0.17 0.06 0.15"
+      radius="0.038" height="0.16" color="#0a0a0a"></a-cylinder>
+    <a-cylinder id="leg1" position="0.17 0.06 0.15"
+      radius="0.038" height="0.16" color="#0a0a0a"></a-cylinder>
+    <a-cylinder id="leg2" position="-0.2 0.06 0"
+      radius="0.038" height="0.16" color="#0a0a0a"></a-cylinder>
+    <a-cylinder id="leg3" position="0.2 0.06 0"
+      radius="0.038" height="0.16" color="#0a0a0a"></a-cylinder>
+    <a-cylinder id="leg4" position="-0.17 0.06 -0.15"
+      radius="0.038" height="0.16" color="#0a0a0a"></a-cylinder>
+    <a-cylinder id="leg5" position="0.17 0.06 -0.15"
+      radius="0.038" height="0.16" color="#0a0a0a"></a-cylinder>
+
+    <!-- HOJA que sostiene -->
+    <a-entity position="0.38 0.42 0.1"
+      animation__hoja_aparecer="property:scale; from:0 0 0; to:1 1 1;
+        delay:1500; dur:600; easing:easeOutElastic"
+      animation__hoja_float="property:position; from:0.38 0.42 0.1; to:0.38 0.50 0.1;
+        dir:alternate; loop:true; dur:1000; easing:easeInOutSine">
+      <a-plane width="0.18" height="0.22" color="#4caf50" rotation="0 -30 15"></a-plane>
+      <a-cylinder position="0 0 0.01" radius="0.007" height="0.2"
+        color="#2e7d32" rotation="0 0 15"></a-cylinder>
     </a-entity>
 
-    <a-text value="¿Quieres ser"
-      position="0 1.2 0" align="center"
-      color="#FF69B4" width="2.5" opacity="0"
-      animation__aparecer="property: opacity;
-        from: 0; to: 1; delay: 800; dur: 1000"
-      animation__flotar="property: position;
-        from: 0 1.2 0; to: 0 1.3 0;
-        dir: alternate; loop: true; dur: 1200">
-    </a-text>
+  </a-entity>
 
-    <a-text value="mi novia"
-      position="0 1.0 0" align="center"
-      color="#FF1493" width="2.8" opacity="0"
-      animation__aparecer="property: opacity;
-        from: 0; to: 1; delay: 1200; dur: 1000"
-      animation__flotar="property: position;
-        from: 0 1.0 0; to: 0 1.1 0;
-        dir: alternate; loop: true; dur: 1200">
-    </a-text>
+  <!-- TEXTO FLOTANTE -->
+  <a-text value="¿Quieres ser"
+    position="0 1.25 0" align="center"
+    color="#FF69B4" width="2.6" opacity="0"
+    animation__show="property:opacity; from:0; to:1; delay:600; dur:900"
+    animation__up="property:position; from:0 1.25 0; to:0 1.35 0;
+      dir:alternate; loop:true; dur:1300; easing:easeInOutSine">
+  </a-text>
 
-    <a-text value="ARMIÑA ?"
-      position="0 0.78 0" align="center"
-      color="#FF0066" width="3.2" opacity="0"
-      animation__aparecer="property: opacity;
-        from: 0; to: 1; delay: 1600; dur: 1000"
-      animation__flotar="property: position;
-        from: 0 0.78 0; to: 0 0.88 0;
-        dir: alternate; loop: true; dur: 1200"
-      animation__pulso="property: scale;
-        from: 1 1 1; to: 1.15 1.15 1.15;
-        dir: alternate; loop: true; dur: 800">
-    </a-text>
+  <a-text value="mi novia"
+    position="0 1.02 0" align="center"
+    color="#FF1493" width="3.0" opacity="0"
+    animation__show="property:opacity; from:0; to:1; delay:1000; dur:900"
+    animation__up="property:position; from:0 1.02 0; to:0 1.12 0;
+      dir:alternate; loop:true; dur:1300; easing:easeInOutSine">
+  </a-text>
 
-    <a-text value="♥" position="-0.65 1.0 0"
-      color="#FF69B4" width="1.5" align="center" opacity="0"
-      animation__aparecer="property: opacity;
-        from: 0; to: 0.9; delay: 2000; dur: 600"
-      animation__latir="property: scale;
-        from: 1 1 1; to: 1.4 1.4 1.4;
-        dir: alternate; loop: true; dur: 550">
-    </a-text>
+  <a-text value="ARMIÑA ?"
+    position="0 0.78 0" align="center"
+    color="#FF0066" width="3.4" opacity="0"
+    animation__show="property:opacity; from:0; to:1; delay:1400; dur:900"
+    animation__up="property:position; from:0 0.78 0; to:0 0.88 0;
+      dir:alternate; loop:true; dur:1300; easing:easeInOutSine"
+    animation__pulse="property:scale; from:1 1 1; to:1.2 1.2 1.2;
+      dir:alternate; loop:true; dur:700; easing:easeInOutSine">
+  </a-text>
 
-    <a-text value="♥" position="0.65 1.0 0"
-      color="#FF69B4" width="1.5" align="center" opacity="0"
-      animation__aparecer="property: opacity;
-        from: 0; to: 0.9; delay: 2200; dur: 600"
-      animation__latir="property: scale;
-        from: 1.4 1.4 1.4; to: 1 1 1;
-        dir: alternate; loop: true; dur: 550">
-    </a-text>
+  <a-text value="♥" position="-0.7 1.02 0"
+    color="#FF69B4" width="1.6" align="center" opacity="0"
+    animation__show="property:opacity; from:0; to:1; delay:1800; dur:500"
+    animation__beat="property:scale; from:1 1 1; to:1.5 1.5 1.5;
+      dir:alternate; loop:true; dur:500">
+  </a-text>
 
-  </a-marker>
-  <a-entity camera></a-entity>
+  <a-text value="♥" position="0.7 1.02 0"
+    color="#FF69B4" width="1.6" align="center" opacity="0"
+    animation__show="property:opacity; from:0; to:1; delay:2000; dur:500"
+    animation__beat="property:scale; from:1.5 1.5 1.5; to:1 1 1;
+      dir:alternate; loop:true; dur:500">
+  </a-text>
+
+</a-marker>
+<a-entity camera></a-entity>
 </a-scene>
 </body>
 </html>
