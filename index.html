@@ -1,29 +1,137 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AR.js - Animación Básica</title>
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+  <title>AR.js - Susuwatari</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
 </head>
-<body style="margin: 0; overflow: hidden;">
-    <a-scene embedded arjs="sourceType: webcam;">
+<body style="margin:0; overflow:hidden;">
+  <a-scene embedded arjs="sourceType: webcam;">
+    <a-marker type="pattern" url="pattern-SR.patt">
 
-        <a-marker type="pattern" url="pattern-SR.patt">
+      <!-- === CUERPO PRINCIPAL === -->
+      <a-sphere id="cuerpo"
+        position="0 0.35 0"
+        radius="0.3"
+        color="#1a1a1a"
+        animation__bounce="property: position;
+          from: 0 0.35 0; to: 0 0.42 0;
+          dir: alternate; loop: true;
+          dur: 500; easing: easeInOutSine">
+      </a-sphere>
 
-            <a-box position="0 0.5 0"
-                   color="red"
-                   scale="0.5 0.5 0.5"
-                   animation="property: rotation; to: 0 360 0; loop: true; dur: 3000; easing: linear">
-            </a-box>
+      <!-- === OJOS === -->
+      <a-sphere position="-0.1 0.52 0.25"
+        radius="0.07" color="white">
+      </a-sphere>
+      <a-sphere position="0.1 0.52 0.25"
+        radius="0.07" color="white">
+      </a-sphere>
+      <!-- Pupilas -->
+      <a-sphere position="-0.09 0.52 0.31"
+        radius="0.04" color="black">
+      </a-sphere>
+      <a-sphere position="0.11 0.52 0.31"
+        radius="0.04" color="black">
+      </a-sphere>
 
-        </a-marker>
+      <!-- === PATITAS (4 pequeños cilindros) === -->
+      <!-- Delantera izquierda -->
+      <a-cylinder position="-0.18 0.07 0.1"
+        radius="0.04" height="0.15" color="#111111"
+        animation="property: rotation;
+          from: -20 0 0; to: 20 0 0;
+          dir: alternate; loop: true;
+          dur: 250; easing: linear">
+      </a-cylinder>
 
-        <a-entity camera></a-entity>
-    </a-scene>
+      <!-- Delantera derecha -->
+      <a-cylinder position="0.18 0.07 0.1"
+        radius="0.04" height="0.15" color="#111111"
+        animation="property: rotation;
+          from: 20 0 0; to: -20 0 0;
+          dir: alternate; loop: true;
+          dur: 250; easing: linear">
+      </a-cylinder>
+
+      <!-- Trasera izquierda -->
+      <a-cylinder position="-0.18 0.07 -0.1"
+        radius="0.04" height="0.15" color="#111111"
+        animation="property: rotation;
+          from: 20 0 0; to: -20 0 0;
+          dir: alternate; loop: true;
+          dur: 250; easing: linear">
+      </a-cylinder>
+
+      <!-- Trasera derecha -->
+      <a-cylinder position="0.18 0.07 -0.1"
+        radius="0.04" height="0.15" color="#111111"
+        animation="property: rotation;
+          from: -20 0 0; to: 20 0 0;
+          dir: alternate; loop: true;
+          dur: 250; easing: linear">
+      </a-cylinder>
+
+      <!-- === BRAZOS / ANTENAS === -->
+      <a-cylinder position="-0.28 0.45 0.1"
+        radius="0.025" height="0.2" color="#111111"
+        rotation="0 0 40"
+        animation="property: rotation;
+          from: 0 0 30; to: 0 0 50;
+          dir: alternate; loop: true;
+          dur: 400; easing: easeInOutSine">
+      </a-cylinder>
+      <a-cylinder position="0.28 0.45 0.1"
+        radius="0.025" height="0.2" color="#111111"
+        rotation="0 0 -40"
+        animation="property: rotation;
+          from: 0 0 -30; to: 0 0 -50;
+          dir: alternate; loop: true;
+          dur: 400; easing: easeInOutSine">
+      </a-cylinder>
+
+      <!-- === HOJA (aparece flotando y girando) === -->
+      <a-plane
+        position="0.45 0.6 0"
+        width="0.22"
+        height="0.28"
+        color="#4caf50"
+        opacity="0"
+        rotation="0 0 15"
+        animation__appear="property: opacity;
+          from: 0; to: 1;
+          startEvents: loaded;
+          delay: 1200; dur: 800"
+        animation__float="property: position;
+          from: 0.45 0.6 0; to: 0.45 0.72 0;
+          dir: alternate; loop: true;
+          dur: 1000; easing: easeInOutSine"
+        animation__spin="property: rotation;
+          from: 0 0 15; to: 0 360 15;
+          loop: true; dur: 4000; easing: linear">
+      </a-plane>
+
+      <!-- Nervadura central de la hoja -->
+      <a-cylinder
+        position="0.45 0.6 0.01"
+        radius="0.008"
+        height="0.24"
+        color="#2e7d32"
+        opacity="0"
+        animation__appear="property: opacity;
+          from: 0; to: 1;
+          delay: 1200; dur: 800"
+        animation__float="property: position;
+          from: 0.45 0.6 0.01; to: 0.45 0.72 0.01;
+          dir: alternate; loop: true;
+          dur: 1000; easing: easeInOutSine">
+      </a-cylinder>
+
+    </a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
 </body>
 </html>
-
-
 
 
 
