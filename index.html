@@ -5,47 +5,103 @@
   <title>AR - Susuwatari</title>
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+  <script>
+    // Lógica para interactividad y eventos
+    AFRAME.registerComponent('ar-logic', {
+      init: function () {
+        const marker = document.querySelector('a-marker');
+        const content = document.querySelector('#main-content');
+        const sound = document.querySelector('#magic-sound');
+        const susu = document.querySelector('#susuwatari');
+
+        marker.addEventListener('markerFound', () => {
+          content.setAttribute('animation__appear', {
+            property: 'scale',
+            from: '0 0 0',
+            to: '1 1 1',
+            dur: 800,
+            easing: 'easeOutElastic'
+          });
+          if (sound.components.sound) sound.components.sound.playSound();
+        });
+
+        marker.addEventListener('markerLost', () => {
+          content.setAttribute('scale', '0 0 0');
+          if (sound.components.sound) sound.components.sound.stopSound();
+        });
+
+        // Click para saltito
+        susu.addEventListener('click', () => {
+          susu.setAttribute('animation__jump', {
+            property: 'position',
+            from: '0 0.32 0',
+            to: '0 0.6 0',
+            dur: 300,
+            dir: 'alternate',
+            loop: 1,
+            easing: 'easeOutQuad'
+          });
+        });
+      }
+    });
+  </script>
 </head>
 
 <body style="margin:0;overflow:hidden;">
-  <a-scene embedded arjs="sourceType: webcam;">
+  <a-scene embedded arjs="sourceType: webcam;" ar-logic cursor="rayOrigin: mouse" raycaster="objects: .clickable">
+    
+    <a-assets>
+      <!-- Sonido de ejemplo (puedes cambiar la URL por tu archivo favorito) -->
+      <a-asset-item id="magic-sound" src="https://cdn.freesound.org/previews/240/240809_4107740-lq.mp3"></a-asset-item>
+    </a-assets>
+
+    <!-- Iluminación mejorada -->
+    <a-light type="ambient" color="#fff" intensity="0.5"></a-light>
+    <a-light type="point" intensity="1" position="1 2 1" color="#fff"></a-light>
+
     <a-marker type="pattern" url="pattern-SR.patt">
+      
+      <!-- Contenedor para animación de aparición -->
+      <a-entity id="main-content" scale="0 0 0">
 
-      <a-circle position="0 0.01 0" radius="0.3" color="#000" opacity="0.2" rotation="-90 0 0"></a-circle>
+        <a-circle position="0 0.01 0" radius="0.3" color="#000" opacity="0.2" rotation="-90 0 0"></a-circle>
 
-      <a-sphere position="0 0.32 0" radius="0.3" color="#0d0d0d"
-        animation__bounce="property:position; from:0 0.30 0; to:0 0.35 0; dir:alternate; loop:true; dur:400; easing:easeInOutSine">
-      </a-sphere>
+        <!-- Susuwatari con ID y clase para interactividad -->
+        <a-entity id="susuwatari" class="clickable">
+          <a-sphere position="0 0.32 0" radius="0.3" color="#0d0d0d"
+            animation__bounce="property:position; from:0 0.30 0; to:0 0.35 0; dir:alternate; loop:true; dur:400; easing:easeInOutSine">
+          </a-sphere>
 
-      <a-sphere position="0.27 0.32 0" radius="0.09" color="#111"></a-sphere>
-      <a-sphere position="-0.27 0.32 0" radius="0.09" color="#111"></a-sphere>
-      <a-sphere position="0.23 0.46 0.05" radius="0.08" color="#0f0f0f"></a-sphere>
-      <a-sphere position="-0.23 0.46 0.05" radius="0.08" color="#0f0f0f"></a-sphere>
-      <a-sphere position="0.2 0.17 0.08" radius="0.08" color="#111"></a-sphere>
-      <a-sphere position="-0.2 0.17 0.08" radius="0.08" color="#111"></a-sphere>
-      <a-sphere position="0.07 0.57 0.05" radius="0.08" color="#0d0d0d"></a-sphere>
-      <a-sphere position="-0.07 0.57 0.05" radius="0.08" color="#0d0d0d"></a-sphere>
-      <a-sphere position="0 0.09 0.18" radius="0.07" color="#111"></a-sphere>
-      <a-sphere position="0.17 0.32 0.22" radius="0.07" color="#0f0f0f"></a-sphere>
-      <a-sphere position="-0.17 0.32 0.22" radius="0.07" color="#0f0f0f"></a-sphere>
-      <a-sphere position="0 0.32 -0.25" radius="0.08" color="#111"></a-sphere>
+          <a-sphere position="0.27 0.32 0" radius="0.09" color="#111"></a-sphere>
+          <a-sphere position="-0.27 0.32 0" radius="0.09" color="#111"></a-sphere>
+          <a-sphere position="0.23 0.46 0.05" radius="0.08" color="#0f0f0f"></a-sphere>
+          <a-sphere position="-0.23 0.46 0.05" radius="0.08" color="#0f0f0f"></a-sphere>
+          <a-sphere position="0.2 0.17 0.08" radius="0.08" color="#111"></a-sphere>
+          <a-sphere position="-0.2 0.17 0.08" radius="0.08" color="#111"></a-sphere>
+          <a-sphere position="0.07 0.57 0.05" radius="0.08" color="#0d0d0d"></a-sphere>
+          <a-sphere position="-0.07 0.57 0.05" radius="0.08" color="#0d0d0d"></a-sphere>
+          <a-sphere position="0 0.09 0.18" radius="0.07" color="#111"></a-sphere>
+          <a-sphere position="0.17 0.32 0.22" radius="0.07" color="#0f0f0f"></a-sphere>
+          <a-sphere position="-0.17 0.32 0.22" radius="0.07" color="#0f0f0f"></a-sphere>
+          <a-sphere position="0 0.32 -0.25" radius="0.08" color="#111"></a-sphere>
 
-      <a-sphere position="-0.11 0.36 0.26" radius="0.095" color="white"></a-sphere>
-      <a-sphere position="-0.10 0.36 0.34" radius="0.062" color="#080808"></a-sphere>
-      <a-sphere position="-0.08 0.38 0.37" radius="0.022" color="white"></a-sphere>
-      <a-sphere position="0.11 0.36 0.26" radius="0.095" color="white"></a-sphere>
-      <a-sphere position="0.12 0.36 0.34" radius="0.062" color="#080808"></a-sphere>
-      <a-sphere position="0.14 0.38 0.37" radius="0.022" color="white"></a-sphere>
+          <a-sphere position="-0.11 0.36 0.26" radius="0.095" color="white"></a-sphere>
+          <a-sphere position="-0.10 0.36 0.34" radius="0.062" color="#080808"></a-sphere>
+          <a-sphere position="-0.08 0.38 0.37" radius="0.022" color="white"></a-sphere>
+          <a-sphere position="0.11 0.36 0.26" radius="0.095" color="white"></a-sphere>
+          <a-sphere position="0.12 0.36 0.34" radius="0.062" color="#080808"></a-sphere>
+          <a-sphere position="0.14 0.38 0.37" radius="0.022" color="white"></a-sphere>
 
-      <a-cylinder position="-0.32 0.38 0.08" radius="0.018" height="0.22" color="#0a0a0a"
-        animation="property:rotation; from:0 0 25; to:0 0 55; dir:alternate; loop:true; dur:500"></a-cylinder>
-      <a-cylinder position="0.32 0.38 0.08" radius="0.018" height="0.22" color="#0a0a0a"
-        animation="property:rotation; from:0 0 -25; to:0 0 -55; dir:alternate; loop:true; dur:500"></a-cylinder>
+          <a-cylinder position="-0.32 0.38 0.08" radius="0.018" height="0.22" color="#0a0a0a"
+            animation="property:rotation; from:0 0 25; to:0 0 55; dir:alternate; loop:true; dur:500"></a-cylinder>
+          <a-cylinder position="0.32 0.38 0.08" radius="0.018" height="0.22" color="#0a0a0a"
+            animation="property:rotation; from:0 0 -25; to:0 0 -55; dir:alternate; loop:true; dur:500"></a-cylinder>
 
-      <a-cylinder position="-0.12 0.05 0" radius="0.018" height="0.16" color="#0a0a0a"
-        animation="property:rotation; from:-25 0 0; to:25 0 0; dir:alternate; loop:true; dur:220"></a-cylinder>
-      <a-cylinder position="0.12 0.05 0" radius="0.018" height="0.16" color="#0a0a0a"
-        animation="property:rotation; from:25 0 0; to:-25 0 0; dir:alternate; loop:true; dur:220"></a-cylinder>
+          <a-cylinder position="-0.12 0.05 0" radius="0.018" height="0.16" color="#0a0a0a"
+            animation="property:rotation; from:-25 0 0; to:25 0 0; dir:alternate; loop:true; dur:220"></a-cylinder>
+          <a-cylinder position="0.12 0.05 0" radius="0.018" height="0.16" color="#0a0a0a"
+            animation="property:rotation; from:25 0 0; to:-25 0 0; dir:alternate; loop:true; dur:220"></a-cylinder>
+        </a-entity>
 
       <a-entity position="0.44 0.44 0.08"
         animation__pop="property:scale; from:0 0 0; to:1 1 1; delay:800; dur:600; easing:easeOutElastic"
@@ -69,8 +125,13 @@
         animation__pulse="property:scale; from:1 1 1; to:1.2 1.2 1.2; dir:alternate; loop:true; dur:650">
       </a-text>
 
+      </a-entity> <!-- Cierre de main-content -->
+
     </a-marker>
-    <a-entity camera></a-entity>
+    <a-entity camera>
+      <!-- Entidad para reproducir el sonido -->
+      <a-entity id="magic-sound" sound="src: #magic-sound"></a-entity>
+    </a-entity>
   </a-scene>
 </body>
 
