@@ -13,20 +13,24 @@
         const content = document.querySelector('#main-content');
         const susu = document.querySelector('#susuwatari');
         
-        // Audio nativo para mayor compatibilidad
         const audio = new Audio('https://cdn.pixabay.com/audio/2022/02/22/audio_d0c6ff1101.mp3');
         audio.loop = true;
+        audio.volume = 1.0;
 
-        // Intentar desbloquear el audio en el primer clic del usuario
-        window.addEventListener('click', () => {
+        // "Cebar" el audio: es vital para móviles que la primera reproducción sea por click
+        const unlockAudio = () => {
           audio.play().then(() => {
-            audio.pause(); // Lo silenciamos hasta que aparezca el marcador
-            console.log("Audio desbloqueado");
-          }).catch(e => console.error("Error al desbloquear audio:", e));
-        }, { once: true });
+            audio.pause();
+            audio.currentTime = 0;
+            console.log("Audio listo y cebado");
+          }).catch(e => console.error("Error audio:", e));
+          window.removeEventListener('click', unlockAudio);
+          window.removeEventListener('touchstart', unlockAudio);
+        };
+        window.addEventListener('click', unlockAudio);
+        window.addEventListener('touchstart', unlockAudio);
 
         marker.addEventListener('markerFound', () => {
-          console.log("Marcador encontrado");
           content.setAttribute('animation__appear', {
             property: 'scale',
             from: '0 0 0',
@@ -34,32 +38,16 @@
             dur: 800,
             easing: 'easeOutElastic'
           });
-          audio.currentTime = 0;
-          audio.play();
+          // Reproducir audio con un pequeño retraso para asegurar carga
+          setTimeout(() => {
+            audio.play().catch(e => console.log("Re-intentando audio..."));
+          }, 100);
         });
 
         marker.addEventListener('markerLost', () => {
-          console.log("Marcador perdido");
           content.setAttribute('scale', '0 0 0');
           audio.pause();
         });
-
-        // Click para saltito
-        const triggerJump = () => {
-          console.log("Salto activado");
-          susu.setAttribute('animation__jump', {
-            property: 'position',
-            from: '0 0 0',
-            to: '0 0.5 0',
-            dur: 300,
-            dir: 'alternate',
-            loop: 2,
-            easing: 'easeOutQuad'
-          });
-        };
-
-        // Escuchar clics en el susuwatari
-        susu.addEventListener('click', triggerJump);
       }
     });
   </script>
@@ -90,8 +78,10 @@
       <a-entity id="main-content" scale="0 0 0">
         <a-circle position="0 0.01 0" radius="0.3" color="#000" opacity="0.2" rotation="-90 0 0"></a-circle>
 
-        <!-- Susuwatari: Se añade la clase 'clickable' a todo el conjunto -->
-        <a-entity id="susuwatari" class="clickable">
+        <!-- Susuwatari: Animación definida en HTML para que se repita en cada click -->
+        <a-entity id="susuwatari" class="clickable"
+          animation__jump="property: position; from: 0 0 0; to: 0 0.5 0; dur: 300; dir: alternate; loop: 2; startEvents: click; easing: easeOutQuad">
+          
           <a-sphere class="clickable" position="0 0.32 0" radius="0.3" color="#0d0d0d"
             animation__bounce="property:position; from:0 0.30 0; to:0 0.35 0; dir:alternate; loop:true; dur:400; easing:easeInOutSine">
           </a-sphere>
@@ -164,4 +154,3 @@
 </body>
 
 </html>
-
