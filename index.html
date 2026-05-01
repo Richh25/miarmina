@@ -9,9 +9,11 @@
       init: function () {
         var el = this.el;
         var t = 0;
-        var leg0 = el.querySelector('#leg0');
-        var leg1 = el.querySelector('#leg1');
-        this.interval = setInterval(function () {
+        var leg0, leg1;
+        var self = this;
+        self.interval = setInterval(function () {
+          if (!leg0) leg0 = el.querySelector('#leg0');
+          if (!leg1) leg1 = el.querySelector('#leg1');
           t += 0.18;
           if (leg0) leg0.setAttribute('rotation', (Math.sin(t) * 28) + ' 0 0');
           if (leg1) leg1.setAttribute('rotation', (Math.sin(t + Math.PI) * 28) + ' 0 0');
@@ -19,86 +21,50 @@
       },
       remove: function () { clearInterval(this.interval); }
     });
-
-    AFRAME.registerComponent('text-drop', {
-      init: function () {
-        this.el.sceneEl.addEventListener('loaded', function () {
-
-          function dropIn(panelId, textId, fromY, toY, delay) {
-            var panel = document.querySelector(panelId);
-            var text  = document.querySelector(textId);
-            setTimeout(function () {
-              [panel, text].forEach(function(el) {
-                if (!el) return;
-                el.setAttribute('visible', 'true');
-                var pos = el.getAttribute('position');
-                el.setAttribute('animation__drop', {
-                  property: 'position',
-                  from: pos.x + ' ' + fromY + ' ' + pos.z,
-                  to:   pos.x + ' ' + toY   + ' ' + pos.z,
-                  dur: 700, easing: 'easeOutBounce'
-                });
-                setTimeout(function () {
-                  el.setAttribute('animation__float', {
-                    property: 'position',
-                    from: pos.x + ' ' + toY + ' ' + pos.z,
-                    to:   pos.x + ' ' + (toY + 0.07) + ' ' + pos.z,
-                    dir: 'alternate', loop: true,
-                    dur: 1300, easing: 'easeInOutSine'
-                  });
-                }, 720);
-              });
-            }, delay);
-          }
-
-          dropIn('#panel1','#line1', 2.4, 1.6,  400);
-          dropIn('#panel2','#line2', 2.4, 1.15, 850);
-          dropIn('#panel3','#line3', 2.4, 0.68, 1300);
-
-          setTimeout(function () {
-            var h1 = document.querySelector('#heart1');
-            var h2 = document.querySelector('#heart2');
-            if (h1) h1.setAttribute('visible','true');
-            if (h2) h2.setAttribute('visible','true');
-          }, 1900);
-        });
-      }
-    });
   </script>
 </head>
 <body style="margin:0;overflow:hidden;">
-<a-scene embedded arjs="sourceType: webcam;" text-drop>
+<a-scene embedded arjs="sourceType: webcam;">
 <a-marker type="pattern" url="pattern-SR.patt">
 
   <!-- SUSUWATARI -->
   <a-entity leg-wave>
+
+    <!-- Sombra -->
     <a-circle position="0 0.01 0" radius="0.3"
       color="#000" opacity="0.2" rotation="-90 0 0"></a-circle>
 
+    <!-- Cuerpo -->
     <a-sphere position="0 0.32 0" radius="0.3" color="#0d0d0d" roughness="1"
       animation__bounce="property:position; from:0 0.30 0; to:0 0.35 0;
-        dir:alternate; loop:true; dur:400; easing:easeInOutSine"></a-sphere>
+        dir:alternate; loop:true; dur:400; easing:easeInOutSine">
+    </a-sphere>
 
-    <a-sphere position="0.27 0.32 0"      radius="0.09" color="#111"></a-sphere>
-    <a-sphere position="-0.27 0.32 0"     radius="0.09" color="#111"></a-sphere>
-    <a-sphere position="0.23 0.46 0.05"   radius="0.08" color="#0f0f0f"></a-sphere>
-    <a-sphere position="-0.23 0.46 0.05"  radius="0.08" color="#0f0f0f"></a-sphere>
-    <a-sphere position="0.2 0.17 0.08"    radius="0.08" color="#111"></a-sphere>
-    <a-sphere position="-0.2 0.17 0.08"   radius="0.08" color="#111"></a-sphere>
-    <a-sphere position="0.07 0.57 0.05"   radius="0.08" color="#0d0d0d"></a-sphere>
-    <a-sphere position="-0.07 0.57 0.05"  radius="0.08" color="#0d0d0d"></a-sphere>
-    <a-sphere position="0 0.09 0.18"      radius="0.07" color="#111"></a-sphere>
-    <a-sphere position="0.17 0.32 0.22"   radius="0.07" color="#0f0f0f"></a-sphere>
-    <a-sphere position="-0.17 0.32 0.22"  radius="0.07" color="#0f0f0f"></a-sphere>
-    <a-sphere position="0 0.32 -0.25"     radius="0.08" color="#111"></a-sphere>
+    <!-- Pelitos -->
+    <a-sphere position="0.27 0.32 0"     radius="0.09" color="#111"></a-sphere>
+    <a-sphere position="-0.27 0.32 0"    radius="0.09" color="#111"></a-sphere>
+    <a-sphere position="0.23 0.46 0.05"  radius="0.08" color="#0f0f0f"></a-sphere>
+    <a-sphere position="-0.23 0.46 0.05" radius="0.08" color="#0f0f0f"></a-sphere>
+    <a-sphere position="0.2 0.17 0.08"   radius="0.08" color="#111"></a-sphere>
+    <a-sphere position="-0.2 0.17 0.08"  radius="0.08" color="#111"></a-sphere>
+    <a-sphere position="0.07 0.57 0.05"  radius="0.08" color="#0d0d0d"></a-sphere>
+    <a-sphere position="-0.07 0.57 0.05" radius="0.08" color="#0d0d0d"></a-sphere>
+    <a-sphere position="0 0.09 0.18"     radius="0.07" color="#111"></a-sphere>
+    <a-sphere position="0.17 0.32 0.22"  radius="0.07" color="#0f0f0f"></a-sphere>
+    <a-sphere position="-0.17 0.32 0.22" radius="0.07" color="#0f0f0f"></a-sphere>
+    <a-sphere position="0 0.32 -0.25"    radius="0.08" color="#111"></a-sphere>
 
-    <a-sphere position="-0.11 0.36 0.26"  radius="0.095" color="white"></a-sphere>
-    <a-sphere position="-0.10 0.36 0.34"  radius="0.062" color="#080808"></a-sphere>
-    <a-sphere position="-0.08 0.38 0.37"  radius="0.022" color="white"></a-sphere>
-    <a-sphere position="0.11 0.36 0.26"   radius="0.095" color="white"></a-sphere>
-    <a-sphere position="0.12 0.36 0.34"   radius="0.062" color="#080808"></a-sphere>
-    <a-sphere position="0.14 0.38 0.37"   radius="0.022" color="white"></a-sphere>
+    <!-- Ojo izquierdo -->
+    <a-sphere position="-0.11 0.36 0.26" radius="0.095" color="white"></a-sphere>
+    <a-sphere position="-0.10 0.36 0.34" radius="0.062" color="#080808"></a-sphere>
+    <a-sphere position="-0.08 0.38 0.37" radius="0.022" color="white"></a-sphere>
 
+    <!-- Ojo derecho -->
+    <a-sphere position="0.11 0.36 0.26"  radius="0.095" color="white"></a-sphere>
+    <a-sphere position="0.12 0.36 0.34"  radius="0.062" color="#080808"></a-sphere>
+    <a-sphere position="0.14 0.38 0.37"  radius="0.022" color="white"></a-sphere>
+
+    <!-- Bracitos -->
     <a-cylinder position="-0.32 0.38 0.08" radius="0.018" height="0.22" color="#0a0a0a"
       rotation="0 0 40"
       animation="property:rotation; from:0 0 25; to:0 0 55;
@@ -108,88 +74,75 @@
       animation="property:rotation; from:0 0 -25; to:0 0 -55;
         dir:alternate; loop:true; dur:500"></a-cylinder>
 
+    <!-- Patitas -->
     <a-cylinder id="leg0" position="-0.12 0.05 0" radius="0.018" height="0.16" color="#0a0a0a"></a-cylinder>
     <a-cylinder id="leg1" position=" 0.12 0.05 0" radius="0.018" height="0.16" color="#0a0a0a"></a-cylinder>
 
-    <!-- ROSA -->
+    <!-- Rosa -->
     <a-entity position="0.44 0.44 0.08"
-      animation__aparecer="property:scale; from:0 0 0; to:1 1 1; delay:1000; dur:700; easing:easeOutElastic"
-      animation__flotar="property:position; from:0.44 0.44 0.08; to:0.44 0.52 0.08;
+      animation__pop="property:scale; from:0 0 0; to:1 1 1; delay:800; dur:600; easing:easeOutElastic"
+      animation__float="property:position; from:0.44 0.44 0.08; to:0.44 0.52 0.08;
         dir:alternate; loop:true; dur:1100; easing:easeInOutSine">
       <a-cylinder position="0 -0.1 0"     radius="0.012" height="0.2"  color="#2e7d32"></a-cylinder>
       <a-sphere   position="0 0.04 0"     radius="0.07"  color="#e53935" scale="1 0.7 1"></a-sphere>
       <a-sphere   position="0.06 0.06 0"  radius="0.05"  color="#ef5350" scale="1 0.6 1"></a-sphere>
       <a-sphere   position="-0.06 0.06 0" radius="0.05"  color="#ef5350" scale="1 0.6 1"></a-sphere>
       <a-sphere   position="0 0.06 0.06"  radius="0.05"  color="#e53935" scale="1 0.6 1"></a-sphere>
-      <a-sphere   position="0 0.06 -0.06" radius="0.05"  color="#e53935" scale="1 0.6 1"></a-sphere>
       <a-sphere   position="0 0.1 0"      radius="0.035" color="#b71c1c"></a-sphere>
-      <a-sphere   position="0.05 -0.05 0"  radius="0.035" color="#388e3c" scale="1.5 0.5 1" rotation="0 0 -30"></a-sphere>
-      <a-sphere   position="-0.05 -0.08 0" radius="0.03"  color="#388e3c" scale="1.5 0.5 1" rotation="0 0 30"></a-sphere>
     </a-entity>
+
   </a-entity>
 
+  <!-- TEXTO: panel + letras, todo con animacion pura -->
 
-
-
-
-  <!-- LINEA 1: panel + texto -->
-  <a-plane position="0 1.6 -0.01" width="1.2" height="0.22"
-    color="#880044" opacity="0"
-    animation__show="property:opacity; from:0; to:0.88; delay:500; dur:300"
-    animation__drop="property:position; from:0 2.5 -0.01; to:0 1.6 -0.01; delay:500; dur:700; easing:easeOutBounce"
-    animation__float="property:position; from:0 1.6 -0.01; to:0 1.67 -0.01; delay:1300; dir:alternate; loop:true; dur:1300; easing:easeInOutSine">
+  <!-- Linea 1 -->
+  <a-plane position="0 2.5 -0.01" width="1.2" height="0.22" color="#880044" opacity="0"
+    animation__drop="property:position; from:0 2.5 -0.01; to:0 1.6 -0.01; delay:400; dur:700; easing:easeOutBounce"
+    animation__show="property:opacity; from:0; to:0.88; delay:400; dur:200"
+    animation__float="property:position; from:0 1.6 -0.01; to:0 1.67 -0.01; delay:1200; dir:alternate; loop:true; dur:1300">
   </a-plane>
-  <a-text value="Quieres ser" position="0 1.6 0.02" align="center"
-    color="#ffffff" width="3.2" opacity="0"
-    animation__show="property:opacity; from:0; to:1; delay:500; dur:300"
-    animation__drop="property:position; from:0 2.5 0.02; to:0 1.6 0.02; delay:500; dur:700; easing:easeOutBounce"
-    animation__float="property:position; from:0 1.6 0.02; to:0 1.67 0.02; delay:1300; dir:alternate; loop:true; dur:1300; easing:easeInOutSine">
+  <a-text value="Quieres ser" position="0 2.5 0.02" align="center" color="#ffffff" width="3.2" opacity="0"
+    animation__drop="property:position; from:0 2.5 0.02; to:0 1.6 0.02; delay:400; dur:700; easing:easeOutBounce"
+    animation__show="property:opacity; from:0; to:1; delay:400; dur:200"
+    animation__float="property:position; from:0 1.6 0.02; to:0 1.67 0.02; delay:1200; dir:alternate; loop:true; dur:1300">
   </a-text>
 
-  <!-- LINEA 2: panel + texto -->
-  <a-plane position="0 1.15 -0.01" width="1.0" height="0.22"
-    color="#880044" opacity="0"
-    animation__show="property:opacity; from:0; to:0.88; delay:900; dur:300"
-    animation__drop="property:position; from:0 2.5 -0.01; to:0 1.15 -0.01; delay:900; dur:700; easing:easeOutBounce"
-    animation__float="property:position; from:0 1.15 -0.01; to:0 1.22 -0.01; delay:1700; dir:alternate; loop:true; dur:1300; easing:easeInOutSine">
+  <!-- Linea 2 -->
+  <a-plane position="0 2.5 -0.01" width="1.0" height="0.22" color="#880044" opacity="0"
+    animation__drop="property:position; from:0 2.5 -0.01; to:0 1.15 -0.01; delay:850; dur:700; easing:easeOutBounce"
+    animation__show="property:opacity; from:0; to:0.88; delay:850; dur:200"
+    animation__float="property:position; from:0 1.15 -0.01; to:0 1.22 -0.01; delay:1650; dir:alternate; loop:true; dur:1300">
   </a-plane>
-  <a-text value="mi novia" position="0 1.15 0.02" align="center"
-    color="#FFE600" width="3.4" opacity="0"
-    animation__show="property:opacity; from:0; to:1; delay:900; dur:300"
-    animation__drop="property:position; from:0 2.5 0.02; to:0 1.15 0.02; delay:900; dur:700; easing:easeOutBounce"
-    animation__float="property:position; from:0 1.15 0.02; to:0 1.22 0.02; delay:1700; dir:alternate; loop:true; dur:1300; easing:easeInOutSine">
+  <a-text value="mi novia" position="0 2.5 0.02" align="center" color="#FFE600" width="3.4" opacity="0"
+    animation__drop="property:position; from:0 2.5 0.02; to:0 1.15 0.02; delay:850; dur:700; easing:easeOutBounce"
+    animation__show="property:opacity; from:0; to:1; delay:850; dur:200"
+    animation__float="property:position; from:0 1.15 0.02; to:0 1.22 0.02; delay:1650; dir:alternate; loop:true; dur:1300">
   </a-text>
 
-  <!-- LINEA 3: panel + texto -->
-  <a-plane position="0 0.68 -0.01" width="1.3" height="0.26"
-    color="#cc0033" opacity="0"
-    animation__show="property:opacity; from:0; to:0.92; delay:1300; dur:300"
+  <!-- Linea 3 -->
+  <a-plane position="0 2.5 -0.01" width="1.3" height="0.26" color="#cc0033" opacity="0"
     animation__drop="property:position; from:0 2.5 -0.01; to:0 0.68 -0.01; delay:1300; dur:700; easing:easeOutBounce"
-    animation__float="property:position; from:0 0.68 -0.01; to:0 0.75 -0.01; delay:2100; dir:alternate; loop:true; dur:1300; easing:easeInOutSine">
+    animation__show="property:opacity; from:0; to:0.92; delay:1300; dur:200"
+    animation__float="property:position; from:0 0.68 -0.01; to:0 0.75 -0.01; delay:2100; dir:alternate; loop:true; dur:1300">
   </a-plane>
-  <a-text value="ARMINA ?" position="0 0.68 0.02" align="center"
-    color="#ffffff" width="4.0" opacity="0"
-    animation__show="property:opacity; from:0; to:1; delay:1300; dur:300"
+  <a-text value="ARMINA?" position="0 2.5 0.02" align="center" color="#ffffff" width="4.0" opacity="0"
     animation__drop="property:position; from:0 2.5 0.02; to:0 0.68 0.02; delay:1300; dur:700; easing:easeOutBounce"
-    animation__float="property:position; from:0 0.68 0.02; to:0 0.75 0.02; delay:2100; dir:alternate; loop:true; dur:1300; easing:easeInOutSine"
+    animation__show="property:opacity; from:0; to:1; delay:1300; dur:200"
+    animation__float="property:position; from:0 0.68 0.02; to:0 0.75 0.02; delay:2100; dir:alternate; loop:true; dur:1300"
     animation__pulse="property:scale; from:1 1 1; to:1.2 1.2 1.2; delay:2100; dir:alternate; loop:true; dur:650">
   </a-text>
 
-  <!-- CORAZONES -->
-  <a-text value="♥" position="-0.85 1.15 0.02"
+  <!-- Corazones -->
+  <a-text value="&#x2665;" position="-0.85 1.15 0.02"
     color="#FF1493" width="2.0" align="center" opacity="0"
     animation__show="property:opacity; from:0; to:1; delay:1800; dur:400"
     animation__beat="property:scale; from:1 1 1; to:1.6 1.6 1.6; dir:alternate; loop:true; dur:480">
   </a-text>
-  <a-text value="♥" position="0.85 1.15 0.02"
+  <a-text value="&#x2665;" position="0.85 1.15 0.02"
     color="#FF1493" width="2.0" align="center" opacity="0"
     animation__show="property:opacity; from:0; to:1; delay:2000; dur:400"
     animation__beat="property:scale; from:1.6 1.6 1.6; to:1 1 1; dir:alternate; loop:true; dur:480">
   </a-text>
-
-
-  
-  
 
 </a-marker>
 <a-entity camera></a-entity>
