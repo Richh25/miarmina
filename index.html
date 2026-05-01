@@ -137,59 +137,54 @@
 
   </a-entity>
 
-  <!-- LINEA 1: panel oscuro + texto rosa -->
-  <a-plane id="panel1" position="0 1.28 -0.01"
-    width="0.95" height="0.2"
-    color="#1a0010" opacity="0.82"
-    visible="false">
+<!-- LINEA 1 -->
+  <a-plane id="panel1" position="0 1.6 -0.01"
+    width="1.1" height="0.25" color="#1a0010" opacity="0.85" visible="false">
   </a-plane>
   <a-text id="line1" value="¿Quieres ser"
-    position="0 1.28 0" align="center"
-    color="#FF69B4" width="3.0"
+    position="0 1.6 0" align="center"
+    color="#FF69B4" width="3.2"
     font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
     visible="false">
   </a-text>
 
-  <!-- LINEA 2: panel oscuro + texto blanco -->
-  <a-plane id="panel2" position="0 1.00 -0.01"
-    width="0.85" height="0.2"
-    color="#1a0010" opacity="0.82"
-    visible="false">
+  <!-- LINEA 2 -->
+  <a-plane id="panel2" position="0 1.2 -0.01"
+    width="1.0" height="0.25" color="#1a0010" opacity="0.85" visible="false">
   </a-plane>
   <a-text id="line2" value="mi novia"
-    position="0 1.00 0" align="center"
-    color="#ffffff" width="3.2"
+    position="0 1.2 0" align="center"
+    color="#ffffff" width="3.4"
     font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
     visible="false">
   </a-text>
 
-  <!-- LINEA 3: panel rojo + texto amarillo pulsante -->
-  <a-plane id="panel3" position="0 0.70 -0.01"
-    width="1.1" height="0.24"
-    color="#c0003c" opacity="0.9"
-    visible="false">
+  <!-- LINEA 3 -->
+  <a-plane id="panel3" position="0 0.78 -0.01"
+    width="1.3" height="0.28" color="#c0003c" opacity="0.9" visible="false">
   </a-plane>
   <a-text id="line3" value="ARMIÑA ?"
-    position="0 0.70 0" align="center"
-    color="#FFE600" width="3.8"
+    position="0 0.78 0" align="center"
+    color="#FFE600" width="4.2"
     font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
     visible="false"
     animation__pulse="property:scale; from:1 1 1; to:1.2 1.2 1.2;
       dir:alternate; loop:true; dur:650; easing:easeInOutSine">
   </a-text>
 
-  <!-- CORAZONES -->
-  <a-text id="heart1" value="♥" position="-0.7 1.0 0"
-    color="#FF1493" width="1.8" align="center" visible="false"
+  <!-- CORAZONES más separados -->
+  <a-text id="heart1" value="♥" position="-0.8 1.2 0"
+    color="#FF1493" width="2.0" align="center" visible="false"
     animation__beat="property:scale; from:1 1 1; to:1.6 1.6 1.6;
       dir:alternate; loop:true; dur:480">
   </a-text>
-  <a-text id="heart2" value="♥" position="0.7 1.0 0"
-    color="#FF1493" width="1.8" align="center" visible="false"
+  <a-text id="heart2" value="♥" position="0.8 1.2 0"
+    color="#FF1493" width="2.0" align="center" visible="false"
     animation__beat="property:scale; from:1.6 1.6 1.6; to:1 1 1;
       dir:alternate; loop:true; dur:480">
   </a-text>
 
+  
 </a-marker>
 <a-entity camera></a-entity>
 </a-scene>
