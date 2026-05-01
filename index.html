@@ -11,42 +11,37 @@
       init: function () {
         const marker = document.querySelector('a-marker');
         const content = document.querySelector('#main-content');
-        const susu = document.querySelector('#susuwatari');
         
-        const audio = new Audio('https://cdn.pixabay.com/audio/2022/02/22/audio_d0c6ff1101.mp3');
+        // Usamos una melodía de piano muy ligera y fiable
+        const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
         audio.loop = true;
-        audio.volume = 1.0;
+        audio.volume = 0; // Empezamos en silencio absoluto
 
-        // "Cebar" el audio: es vital para móviles que la primera reproducción sea por click
-        const unlockAudio = () => {
+        const startAudioSystem = () => {
           audio.play().then(() => {
-            audio.pause();
-            audio.currentTime = 0;
-            console.log("Audio listo y cebado");
+            console.log("Sistema de audio activo (silenciado)");
           }).catch(e => console.error("Error audio:", e));
-          window.removeEventListener('click', unlockAudio);
-          window.removeEventListener('touchstart', unlockAudio);
+          window.removeEventListener('click', startAudioSystem);
+          window.removeEventListener('touchstart', startAudioSystem);
         };
-        window.addEventListener('click', unlockAudio);
-        window.addEventListener('touchstart', unlockAudio);
+
+        // Activamos el motor de audio con el primer toque
+        window.addEventListener('click', startAudioSystem);
+        window.addEventListener('touchstart', startAudioSystem);
 
         marker.addEventListener('markerFound', () => {
           content.setAttribute('animation__appear', {
-            property: 'scale',
-            from: '0 0 0',
-            to: '1 1 1',
-            dur: 800,
-            easing: 'easeOutElastic'
+            property: 'scale', from: '0 0 0', to: '1 1 1',
+            dur: 800, easing: 'easeOutElastic'
           });
-          // Reproducir audio con un pequeño retraso para asegurar carga
-          setTimeout(() => {
-            audio.play().catch(e => console.log("Re-intentando audio..."));
-          }, 100);
+          // En lugar de play(), solo subimos el volumen
+          audio.volume = 1;
         });
 
         marker.addEventListener('markerLost', () => {
           content.setAttribute('scale', '0 0 0');
-          audio.pause();
+          // Bajamos el volumen al perder el marcador
+          audio.volume = 0;
         });
       }
     });
