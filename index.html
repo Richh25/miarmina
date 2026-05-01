@@ -11,53 +11,58 @@
       init: function () {
         const marker = document.querySelector('a-marker');
         const content = document.querySelector('#main-content');
+        const overlay = document.querySelector('#overlay');
+        const startBtn = document.querySelector('#start-btn');
         
-        // Canción solicitada: Merry-Go-Round of Life
         const audio = new Audio('https://ia800703.us.archive.org/11/items/GhibliPiano/01%20Merry-Go-Round%20of%20Life.mp3');
         audio.loop = true;
-        audio.volume = 0; // Empezamos en silencio absoluto
+        audio.volume = 0;
 
-        const startAudioSystem = () => {
+        startBtn.addEventListener('click', () => {
           audio.play().then(() => {
-            console.log("Sistema de audio activo (silenciado)");
-          }).catch(e => console.error("Error audio:", e));
-          window.removeEventListener('click', startAudioSystem);
-          window.removeEventListener('touchstart', startAudioSystem);
-        };
-
-        // Activamos el motor de audio con el primer toque
-        window.addEventListener('click', startAudioSystem);
-        window.addEventListener('touchstart', startAudioSystem);
+            overlay.style.display = 'none';
+            console.log("Audio iniciado (muteado)");
+          }).catch(e => {
+            alert("Error al iniciar audio. Por favor intenta de nuevo.");
+            console.error(e);
+          });
+        });
 
         marker.addEventListener('markerFound', () => {
           content.setAttribute('animation__appear', {
             property: 'scale', from: '0 0 0', to: '1 1 1',
             dur: 800, easing: 'easeOutElastic'
           });
-          // En lugar de play(), solo subimos el volumen
           audio.volume = 1;
         });
 
         marker.addEventListener('markerLost', () => {
           content.setAttribute('scale', '0 0 0');
-          // Bajamos el volumen al perder el marcador
           audio.volume = 0;
         });
       }
     });
   </script>
+  <style>
+    #overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8); z-index: 10000;
+      display: flex; justify-content: center; align-items: center;
+      flex-direction: column; color: white; font-family: sans-serif;
+    }
+    #start-btn {
+      padding: 15px 30px; font-size: 20px; cursor: pointer;
+      background: #880044; color: white; border: none; border-radius: 10px;
+    }
+  </style>
 </head>
 
 <body style="margin:0;overflow:hidden;">
-  <!-- Pequeño aviso para activar audio si no ha habido interacción -->
-  <div id="audio-prompt" style="position: fixed; top: 10px; left: 10px; z-index: 9999; color: white; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 5px; font-family: sans-serif; pointer-events: none;">
-    Toca la pantalla para activar la música 🎵
+  <div id="overlay">
+    <h2>Proyecto Armiña</h2>
+    <p>Haz clic para iniciar la música y la cámara</p>
+    <button id="start-btn">EMPEZAR</button>
   </div>
-  <script>
-    window.addEventListener('click', () => {
-      document.getElementById('audio-prompt').style.display = 'none';
-    }, { once: true });
-  </script>
 
   <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" ar-logic vr-mode-ui="enabled: false">
     
