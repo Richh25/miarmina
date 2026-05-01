@@ -22,48 +22,51 @@
 
     AFRAME.registerComponent('text-drop', {
       init: function () {
-        var scene = this.el.sceneEl;
-        scene.addEventListener('loaded', function () {
+        this.el.sceneEl.addEventListener('loaded', function () {
 
-          var line1 = document.querySelector('#line1');
-          var line2 = document.querySelector('#line2');
-          var line3 = document.querySelector('#line3');
-          var heart1 = document.querySelector('#heart1');
-          var heart2 = document.querySelector('#heart2');
-
-          function dropIn(el, fromY, toY, delay) {
+          // Caida con rebote para cada grupo (panel + texto juntos)
+          function dropIn(panelId, textId, fromY, toY, delay) {
+            var panel = document.querySelector(panelId);
+            var text  = document.querySelector(textId);
             setTimeout(function () {
-              el.setAttribute('opacity', '1');
-              el.setAttribute('position', '0 ' + fromY + ' 0');
-              el.setAttribute('animation__drop', {
-                property: 'position',
-                from: '0 ' + fromY + ' 0',
-                to: '0 ' + toY + ' 0',
-                dur: 600,
-                easing: 'easeOutBounce'
-              });
-              setTimeout(function () {
-                el.setAttribute('animation__float', {
+              [panel, text].forEach(function(el) {
+                if (!el) return;
+                el.setAttribute('visible', 'true');
+                var pos = el.getAttribute('position');
+                var x = pos.x || 0;
+                var z = pos.z || 0;
+                el.setAttribute('position', x + ' ' + fromY + ' ' + z);
+                el.setAttribute('animation__drop', {
                   property: 'position',
-                  from: '0 ' + toY + ' 0',
-                  to: '0 ' + (toY + 0.08) + ' 0',
-                  dir: 'alternate',
-                  loop: true,
-                  dur: 1200,
-                  easing: 'easeInOutSine'
+                  from: x + ' ' + fromY + ' ' + z,
+                  to:   x + ' ' + toY   + ' ' + z,
+                  dur: 700,
+                  easing: 'easeOutBounce'
                 });
-              }, 650);
+                setTimeout(function () {
+                  el.setAttribute('animation__float', {
+                    property: 'position',
+                    from: x + ' ' + toY + ' ' + z,
+                    to:   x + ' ' + (toY + 0.07) + ' ' + z,
+                    dir: 'alternate', loop: true,
+                    dur: 1300, easing: 'easeInOutSine'
+                  });
+                }, 720);
+              });
             }, delay);
           }
 
-          dropIn(line1, 2.2, 1.25, 500);
-          dropIn(line2, 2.2, 0.98, 900);
-          dropIn(line3, 2.2, 0.70, 1300);
+          dropIn('#panel1', '#line1', 2.2, 1.28, 400);
+          dropIn('#panel2', '#line2', 2.2, 1.00, 850);
+          dropIn('#panel3', '#line3', 2.2, 0.70, 1300);
 
+          // Corazones
           setTimeout(function () {
-            heart1.setAttribute('opacity', '1');
-            heart2.setAttribute('opacity', '1');
-          }, 1800);
+            var h1 = document.querySelector('#heart1');
+            var h2 = document.querySelector('#heart2');
+            if (h1) h1.setAttribute('visible', 'true');
+            if (h2) h2.setAttribute('visible', 'true');
+          }, 1900);
         });
       }
     });
@@ -73,22 +76,17 @@
 <a-scene embedded arjs="sourceType: webcam;" text-drop>
 <a-marker type="pattern" url="pattern-SR.patt">
 
-  <!-- Susuwatari quieto con animaciones -->
+  <!-- SUSUWATARI -->
   <a-entity leg-wave>
 
-    <!-- SOMBRA -->
     <a-circle position="0 0.01 0" radius="0.3"
-      color="#000000" opacity="0.2" rotation="-90 0 0">
-    </a-circle>
+      color="#000" opacity="0.2" rotation="-90 0 0"></a-circle>
 
-    <!-- CUERPO -->
-    <a-sphere position="0 0.32 0" radius="0.3"
-      color="#0d0d0d" roughness="1"
+    <a-sphere position="0 0.32 0" radius="0.3" color="#0d0d0d" roughness="1"
       animation__bounce="property:position; from:0 0.30 0; to:0 0.35 0;
         dir:alternate; loop:true; dur:400; easing:easeInOutSine">
     </a-sphere>
 
-    <!-- PELITOS -->
     <a-sphere position="0.27 0.32 0"      radius="0.09" color="#111"></a-sphere>
     <a-sphere position="-0.27 0.32 0"     radius="0.09" color="#111"></a-sphere>
     <a-sphere position="0.23 0.46 0.05"   radius="0.08" color="#0f0f0f"></a-sphere>
@@ -102,108 +100,94 @@
     <a-sphere position="-0.17 0.32 0.22"  radius="0.07" color="#0f0f0f"></a-sphere>
     <a-sphere position="0 0.32 -0.25"     radius="0.08" color="#111"></a-sphere>
 
-    <!-- OJO izquierdo -->
     <a-sphere position="-0.11 0.36 0.26"  radius="0.095" color="white"></a-sphere>
     <a-sphere position="-0.10 0.36 0.34"  radius="0.062" color="#080808"></a-sphere>
     <a-sphere position="-0.08 0.38 0.37"  radius="0.022" color="white"></a-sphere>
-
-    <!-- OJO derecho -->
     <a-sphere position="0.11 0.36 0.26"   radius="0.095" color="white"></a-sphere>
     <a-sphere position="0.12 0.36 0.34"   radius="0.062" color="#080808"></a-sphere>
     <a-sphere position="0.14 0.38 0.37"   radius="0.022" color="white"></a-sphere>
 
-    <!-- 2 BRACITOS delgados -->
-    <a-cylinder position="-0.32 0.38 0.08"
-      radius="0.018" height="0.22" color="#0a0a0a"
+    <a-cylinder position="-0.32 0.38 0.08" radius="0.018" height="0.22" color="#0a0a0a"
       rotation="0 0 40"
       animation="property:rotation; from:0 0 25; to:0 0 55;
-        dir:alternate; loop:true; dur:500; easing:easeInOutSine">
-    </a-cylinder>
-    <a-cylinder position="0.32 0.38 0.08"
-      radius="0.018" height="0.22" color="#0a0a0a"
+        dir:alternate; loop:true; dur:500; easing:easeInOutSine"></a-cylinder>
+    <a-cylinder position="0.32 0.38 0.08"  radius="0.018" height="0.22" color="#0a0a0a"
       rotation="0 0 -40"
       animation="property:rotation; from:0 0 -25; to:0 0 -55;
-        dir:alternate; loop:true; dur:500; easing:easeInOutSine">
-    </a-cylinder>
+        dir:alternate; loop:true; dur:500; easing:easeInOutSine"></a-cylinder>
 
-    <!-- 2 PATITAS delgadas -->
-    <a-cylinder id="leg0" position="-0.12 0.05 0"
-      radius="0.018" height="0.16" color="#0a0a0a">
-    </a-cylinder>
-    <a-cylinder id="leg1" position="0.12 0.05 0"
-      radius="0.018" height="0.16" color="#0a0a0a">
-    </a-cylinder>
+    <a-cylinder id="leg0" position="-0.12 0.05 0" radius="0.018" height="0.16" color="#0a0a0a"></a-cylinder>
+    <a-cylinder id="leg1" position=" 0.12 0.05 0" radius="0.018" height="0.16" color="#0a0a0a"></a-cylinder>
 
     <!-- ROSA -->
     <a-entity position="0.44 0.44 0.08"
-      animation__aparecer="property:scale; from:0 0 0; to:1 1 1;
-        delay:1000; dur:700; easing:easeOutElastic"
+      animation__aparecer="property:scale; from:0 0 0; to:1 1 1; delay:1000; dur:700; easing:easeOutElastic"
       animation__flotar="property:position; from:0.44 0.44 0.08; to:0.44 0.52 0.08;
         dir:alternate; loop:true; dur:1100; easing:easeInOutSine">
-      <a-cylinder position="0 -0.1 0" radius="0.012" height="0.2" color="#2e7d32"></a-cylinder>
-      <a-sphere position="0 0.04 0"   radius="0.07"  color="#e53935" scale="1 0.7 1"></a-sphere>
-      <a-sphere position="0.06 0.06 0"  radius="0.05" color="#ef5350" scale="1 0.6 1"></a-sphere>
-      <a-sphere position="-0.06 0.06 0" radius="0.05" color="#ef5350" scale="1 0.6 1"></a-sphere>
-      <a-sphere position="0 0.06 0.06"  radius="0.05" color="#e53935" scale="1 0.6 1"></a-sphere>
-      <a-sphere position="0 0.06 -0.06" radius="0.05" color="#e53935" scale="1 0.6 1"></a-sphere>
-      <a-sphere position="0 0.1 0"      radius="0.035" color="#b71c1c"></a-sphere>
-      <a-sphere position="0.05 -0.05 0" radius="0.035" color="#388e3c" scale="1.5 0.5 1" rotation="0 0 -30"></a-sphere>
-      <a-sphere position="-0.05 -0.08 0" radius="0.03" color="#388e3c" scale="1.5 0.5 1" rotation="0 0 30"></a-sphere>
+      <a-cylinder position="0 -0.1 0"    radius="0.012" height="0.2"  color="#2e7d32"></a-cylinder>
+      <a-sphere   position="0 0.04 0"    radius="0.07"  color="#e53935" scale="1 0.7 1"></a-sphere>
+      <a-sphere   position="0.06 0.06 0" radius="0.05"  color="#ef5350" scale="1 0.6 1"></a-sphere>
+      <a-sphere   position="-0.06 0.06 0" radius="0.05" color="#ef5350" scale="1 0.6 1"></a-sphere>
+      <a-sphere   position="0 0.06 0.06" radius="0.05"  color="#e53935" scale="1 0.6 1"></a-sphere>
+      <a-sphere   position="0 0.06 -0.06" radius="0.05" color="#e53935" scale="1 0.6 1"></a-sphere>
+      <a-sphere   position="0 0.1 0"     radius="0.035" color="#b71c1c"></a-sphere>
+      <a-sphere   position="0.05 -0.05 0"  radius="0.035" color="#388e3c" scale="1.5 0.5 1" rotation="0 0 -30"></a-sphere>
+      <a-sphere   position="-0.05 -0.08 0" radius="0.03"  color="#388e3c" scale="1.5 0.5 1" rotation="0 0 30"></a-sphere>
     </a-entity>
 
   </a-entity>
 
-  <!-- TEXTO con caida y rebote -->
-  <a-text id="line1"
-    value="¿Quieres ser"
-    position="0 2.2 0"
-    align="center"
-    color="#FF1493"
-    width="3.0"
-    opacity="0"
+  <!-- LINEA 1: panel oscuro + texto rosa -->
+  <a-plane id="panel1" position="0 1.28 -0.01"
+    width="0.95" height="0.2"
+    color="#1a0010" opacity="0.82"
+    visible="false">
+  </a-plane>
+  <a-text id="line1" value="¿Quieres ser"
+    position="0 1.28 0" align="center"
+    color="#FF69B4" width="3.0"
     font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
-    shader="msdf">
+    visible="false">
   </a-text>
 
-  <a-text id="line2"
-    value="mi novia"
-    position="0 2.2 0"
-    align="center"
-    color="#FF69B4"
-    width="3.5"
-    opacity="0"
+  <!-- LINEA 2: panel oscuro + texto blanco -->
+  <a-plane id="panel2" position="0 1.00 -0.01"
+    width="0.85" height="0.2"
+    color="#1a0010" opacity="0.82"
+    visible="false">
+  </a-plane>
+  <a-text id="line2" value="mi novia"
+    position="0 1.00 0" align="center"
+    color="#ffffff" width="3.2"
     font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
-    shader="msdf">
+    visible="false">
   </a-text>
 
-  <a-text id="line3"
-    value="ARMIÑA ?"
-    position="0 2.2 0"
-    align="center"
-    color="#ffffff"
-    width="4.0"
-    opacity="0"
+  <!-- LINEA 3: panel rojo + texto amarillo pulsante -->
+  <a-plane id="panel3" position="0 0.70 -0.01"
+    width="1.1" height="0.24"
+    color="#c0003c" opacity="0.9"
+    visible="false">
+  </a-plane>
+  <a-text id="line3" value="ARMIÑA ?"
+    position="0 0.70 0" align="center"
+    color="#FFE600" width="3.8"
     font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
-    shader="msdf"
-    animation__pulse="property:scale; from:1 1 1; to:1.25 1.25 1.25;
+    visible="false"
+    animation__pulse="property:scale; from:1 1 1; to:1.2 1.2 1.2;
       dir:alternate; loop:true; dur:650; easing:easeInOutSine">
   </a-text>
 
-  <!-- CORAZONES laterales -->
-  <a-text id="heart1" value="♥"
-    position="-0.7 1.0 0"
-    color="#FF1493" width="1.8"
-    align="center" opacity="0"
+  <!-- CORAZONES -->
+  <a-text id="heart1" value="♥" position="-0.7 1.0 0"
+    color="#FF1493" width="1.8" align="center" visible="false"
     animation__beat="property:scale; from:1 1 1; to:1.6 1.6 1.6;
-      dir:alternate; loop:true; dur:500">
+      dir:alternate; loop:true; dur:480">
   </a-text>
-
-  <a-text id="heart2" value="♥"
-    position="0.7 1.0 0"
-    color="#FF1493" width="1.8"
-    align="center" opacity="0"
+  <a-text id="heart2" value="♥" position="0.7 1.0 0"
+    color="#FF1493" width="1.8" align="center" visible="false"
     animation__beat="property:scale; from:1.6 1.6 1.6; to:1 1 1;
-      dir:alternate; loop:true; dur:500">
+      dir:alternate; loop:true; dur:480">
   </a-text>
 
 </a-marker>
