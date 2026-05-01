@@ -1,120 +1,77 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyecto Armiña - AR Experience</title>
-    <!-- A-Frame and AR.js -->
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <title>AR - Susuwatari</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
 </head>
 
-<body style="margin: 0; overflow: hidden;">
-    
-    <!-- UI Overlay Premium -->
-    <div id="welcome-screen" class="overlay">
-        <div class="glass-card">
-            <h1 class="title">Proyecto <span class="accent">Armiña</span></h1>
-            <p class="subtitle">Una experiencia mágica te espera.</p>
-            <div class="instructions">
-                <div class="step">
-                    <span class="icon">📷</span>
-                    <p>Permite el acceso a la cámara</p>
-                </div>
-                <div class="step">
-                    <span class="icon">🎯</span>
-                    <p>Apunta al marcador SR</p>
-                </div>
-            </div>
-            <button id="start-btn" class="primary-btn">Iniciar Experiencia</button>
-        </div>
-    </div>
+<body style="margin:0;overflow:hidden;">
+  <a-scene embedded arjs="sourceType: webcam;">
+    <a-marker type="pattern" url="pattern-SR.patt">
 
-    <!-- AR Scene -->
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false">
-        
-        <!-- Marcador Personalizado -->
-        <a-marker type="pattern" url="pattern-SR.patt">
+      <a-circle position="0 0.01 0" radius="0.3" color="#000" opacity="0.2" rotation="-90 0 0"></a-circle>
 
-            <!-- Sombra del Susuwatari -->
-            <a-circle position="0 0.01 0" radius="0.3" color="#000" opacity="0.2" rotation="-90 0 0"></a-circle>
+      <a-sphere position="0 0.32 0" radius="0.3" color="#0d0d0d"
+        animation__bounce="property:position; from:0 0.30 0; to:0 0.35 0; dir:alternate; loop:true; dur:400; easing:easeInOutSine">
+      </a-sphere>
 
-            <!-- Cuerpo del Susuwatari (Esfera central) -->
-            <a-sphere position="0 0.32 0" radius="0.3" color="#0d0d0d"
-                animation__bounce="property:position; from:0 0.30 0; to:0 0.35 0; dir:alternate; loop:true; dur:400; easing:easeInOutSine">
-            </a-sphere>
+      <a-sphere position="0.27 0.32 0" radius="0.09" color="#111"></a-sphere>
+      <a-sphere position="-0.27 0.32 0" radius="0.09" color="#111"></a-sphere>
+      <a-sphere position="0.23 0.46 0.05" radius="0.08" color="#0f0f0f"></a-sphere>
+      <a-sphere position="-0.23 0.46 0.05" radius="0.08" color="#0f0f0f"></a-sphere>
+      <a-sphere position="0.2 0.17 0.08" radius="0.08" color="#111"></a-sphere>
+      <a-sphere position="-0.2 0.17 0.08" radius="0.08" color="#111"></a-sphere>
+      <a-sphere position="0.07 0.57 0.05" radius="0.08" color="#0d0d0d"></a-sphere>
+      <a-sphere position="-0.07 0.57 0.05" radius="0.08" color="#0d0d0d"></a-sphere>
+      <a-sphere position="0 0.09 0.18" radius="0.07" color="#111"></a-sphere>
+      <a-sphere position="0.17 0.32 0.22" radius="0.07" color="#0f0f0f"></a-sphere>
+      <a-sphere position="-0.17 0.32 0.22" radius="0.07" color="#0f0f0f"></a-sphere>
+      <a-sphere position="0 0.32 -0.25" radius="0.08" color="#111"></a-sphere>
 
-            <!-- Pelaje / Pinchos (Esferas pequeñas) -->
-            <a-sphere position="0.27 0.32 0" radius="0.09" color="#111"></a-sphere>
-            <a-sphere position="-0.27 0.32 0" radius="0.09" color="#111"></a-sphere>
-            <a-sphere position="0.23 0.46 0.05" radius="0.08" color="#0f0f0f"></a-sphere>
-            <a-sphere position="-0.23 0.46 0.05" radius="0.08" color="#0f0f0f"></a-sphere>
-            <a-sphere position="0.2 0.17 0.08" radius="0.08" color="#111"></a-sphere>
-            <a-sphere position="-0.2 0.17 0.08" radius="0.08" color="#111"></a-sphere>
-            <a-sphere position="0.07 0.57 0.05" radius="0.08" color="#0d0d0d"></a-sphere>
-            <a-sphere position="-0.07 0.57 0.05" radius="0.08" color="#0d0d0d"></a-sphere>
-            <a-sphere position="0 0.09 0.18" radius="0.07" color="#111"></a-sphere>
-            <a-sphere position="0.17 0.32 0.22" radius="0.07" color="#0f0f0f"></a-sphere>
-            <a-sphere position="-0.17 0.32 0.22" radius="0.07" color="#0f0f0f"></a-sphere>
-            <a-sphere position="0 0.32 -0.25" radius="0.08" color="#111"></a-sphere>
+      <a-sphere position="-0.11 0.36 0.26" radius="0.095" color="white"></a-sphere>
+      <a-sphere position="-0.10 0.36 0.34" radius="0.062" color="#080808"></a-sphere>
+      <a-sphere position="-0.08 0.38 0.37" radius="0.022" color="white"></a-sphere>
+      <a-sphere position="0.11 0.36 0.26" radius="0.095" color="white"></a-sphere>
+      <a-sphere position="0.12 0.36 0.34" radius="0.062" color="#080808"></a-sphere>
+      <a-sphere position="0.14 0.38 0.37" radius="0.022" color="white"></a-sphere>
 
-            <!-- Ojos -->
-            <a-sphere position="-0.11 0.36 0.26" radius="0.095" color="white"></a-sphere>
-            <a-sphere position="-0.10 0.36 0.34" radius="0.062" color="#080808"></a-sphere>
-            <a-sphere position="-0.08 0.38 0.37" radius="0.022" color="white"></a-sphere>
-            
-            <a-sphere position="0.11 0.36 0.26" radius="0.095" color="white"></a-sphere>
-            <a-sphere position="0.12 0.36 0.34" radius="0.062" color="#080808"></a-sphere>
-            <a-sphere position="0.14 0.38 0.37" radius="0.022" color="white"></a-sphere>
+      <a-cylinder position="-0.32 0.38 0.08" radius="0.018" height="0.22" color="#0a0a0a"
+        animation="property:rotation; from:0 0 25; to:0 0 55; dir:alternate; loop:true; dur:500"></a-cylinder>
+      <a-cylinder position="0.32 0.38 0.08" radius="0.018" height="0.22" color="#0a0a0a"
+        animation="property:rotation; from:0 0 -25; to:0 0 -55; dir:alternate; loop:true; dur:500"></a-cylinder>
 
-            <!-- Brazos -->
-            <a-cylinder position="-0.32 0.38 0.08" radius="0.018" height="0.22" color="#0a0a0a"
-                animation="property:rotation; from:0 0 25; to:0 0 55; dir:alternate; loop:true; dur:500"></a-cylinder>
-            <a-cylinder position="0.32 0.38 0.08" radius="0.018" height="0.22" color="#0a0a0a"
-                animation="property:rotation; from:0 0 -25; to:0 0 -55; dir:alternate; loop:true; dur:500"></a-cylinder>
+      <a-cylinder position="-0.12 0.05 0" radius="0.018" height="0.16" color="#0a0a0a"
+        animation="property:rotation; from:-25 0 0; to:25 0 0; dir:alternate; loop:true; dur:220"></a-cylinder>
+      <a-cylinder position="0.12 0.05 0" radius="0.018" height="0.16" color="#0a0a0a"
+        animation="property:rotation; from:25 0 0; to:-25 0 0; dir:alternate; loop:true; dur:220"></a-cylinder>
 
-            <!-- Piernas -->
-            <a-cylinder position="-0.12 0.05 0" radius="0.018" height="0.16" color="#0a0a0a"
-                animation="property:rotation; from:-25 0 0; to:25 0 0; dir:alternate; loop:true; dur:220"></a-cylinder>
-            <a-cylinder position="0.12 0.05 0" radius="0.018" height="0.16" color="#0a0a0a"
-                animation="property:rotation; from:25 0 0; to:-25 0 0; dir:alternate; loop:true; dur:220"></a-cylinder>
+      <a-entity position="0.44 0.44 0.08"
+        animation__pop="property:scale; from:0 0 0; to:1 1 1; delay:800; dur:600; easing:easeOutElastic"
+        animation__float="property:position; from:0.44 0.44 0.08; to:0.44 0.52 0.08; dir:alternate; loop:true; dur:1100; easing:easeInOutSine">
+        <a-cylinder position="0 -0.1 0" radius="0.012" height="0.2" color="#2e7d32"></a-cylinder>
+        <a-sphere position="0 0.04 0" radius="0.07" color="#e53935" scale="1 0.7 1"></a-sphere>
+        <a-sphere position="0.06 0.06 0" radius="0.05" color="#ef5350" scale="1 0.6 1"></a-sphere>
+        <a-sphere position="-0.06 0.06 0" radius="0.05" color="#ef5350" scale="1 0.6 1"></a-sphere>
+        <a-sphere position="0 0.06 0.06" radius="0.05" color="#e53935" scale="1 0.6 1"></a-sphere>
+        <a-sphere position="0 0.1 0" radius="0.035" color="#b71c1c"></a-sphere>
+      </a-entity>
 
-            <!-- Flor / Corazón Animado -->
-            <a-entity position="0.44 0.44 0.08"
-                animation__pop="property:scale; from:0 0 0; to:1 1 1; delay:800; dur:600; easing:easeOutElastic"
-                animation__float="property:position; from:0.44 0.44 0.08; to:0.44 0.52 0.08; dir:alternate; loop:true; dur:1100; easing:easeInOutSine">
-                <a-cylinder position="0 -0.1 0" radius="0.012" height="0.2" color="#2e7d32"></a-cylinder>
-                <a-sphere position="0 0.04 0" radius="0.07" color="#e53935" scale="1 0.7 1"></a-sphere>
-                <a-sphere position="0.06 0.06 0" radius="0.05" color="#ef5350" scale="1 0.6 1"></a-sphere>
-                <a-sphere position="-0.06 0.06 0" radius="0.05" color="#ef5350" scale="1 0.6 1"></a-sphere>
-                <a-sphere position="0 0.06 0.06" radius="0.05" color="#e53935" scale="1 0.6 1"></a-sphere>
-                <a-sphere position="0 0.1 0" radius="0.035" color="#b71c1c"></a-sphere>
-            </a-entity>
+      <a-plane position="0 1.6 -0.01" width="1.2" height="0.22" color="#880044" opacity="0.88"></a-plane>
+      <a-text value="Quieres ser" position="0 1.6 0.02" align="center" color="#ffffff" width="3.2"></a-text>
 
-            <!-- Mensajes -->
-            <a-plane position="0 1.6 -0.01" width="1.2" height="0.22" color="#880044" opacity="0.88"></a-plane>
-            <a-text value="Quieres ser" position="0 1.6 0.02" align="center" color="#ffffff" width="3.2" font="https://cdn.aframe.io/fonts/Outfit.json" shader="msdf"></a-text>
+      <a-plane position="0 1.15 -0.01" width="1.0" height="0.22" color="#880044" opacity="50.88"></a-plane>
+      <a-text value="mi novia" position="0 1.15 0.02" align="center" color="#FFE600" width="3.4"></a-text>
 
-            <a-plane position="0 1.15 -0.01" width="1.0" height="0.22" color="#880044" opacity="0.88"></a-plane>
-            <a-text value="mi novia" position="0 1.15 0.02" align="center" color="#FFE600" width="3.4" font="https://cdn.aframe.io/fonts/Outfit.json" shader="msdf"></a-text>
+      <a-plane position="0 0.68 -0.01" width="1.3" height="0.26" color="#cc0033" opacity="50.92"></a-plane>
+      <a-text value="SANDY?" position="0 0.68 0.02" align="center" color="#ffffff" width="4.0"
+        animation__pulse="property:scale; from:1 1 1; to:1.2 1.2 1.2; dir:alternate; loop:true; dur:650">
+      </a-text>
 
-            <a-plane position="0 0.68 -0.01" width="1.3" height="0.26" color="#cc0033" opacity="0.92"></a-plane>
-            <a-text value="SANDY?" position="0 0.68 0.02" align="center" color="#ffffff" width="4.0" font="https://cdn.aframe.io/fonts/Outfit.json" shader="msdf"
-                animation__pulse="property:scale; from:1 1 1; to:1.2 1.2 1.2; dir:alternate; loop:true; dur:650">
-            </a-text>
-
-        </a-marker>
-
-        <a-entity camera></a-entity>
-    </a-scene>
-
-    <script src="main.js"></script>
+    </a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
 </body>
 
 </html>
