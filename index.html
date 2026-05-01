@@ -13,22 +13,18 @@
         const content = document.querySelector('#main-content');
         const overlay = document.querySelector('#overlay');
         const startBtn = document.querySelector('#start-btn');
-        const audio = document.querySelector('#ghibli-audio');
         
+        // URL de alta velocidad en GitHub
+        const audio = new Audio('https://raw.githubusercontent.com/KalleHallden/Music_Player/master/music/Howl\'s%20Moving%20Castle%20-%20Merry%20Go%20Round%20Of%20Life.mp3');
+        audio.loop = true;
         audio.volume = 0;
 
         startBtn.addEventListener('click', () => {
-          startBtn.innerText = "Cargando...";
-          startBtn.disabled = true;
-
           audio.play().then(() => {
             overlay.style.display = 'none';
-            console.log("Audio iniciado correctamente");
           }).catch(e => {
-            console.error("Error detallado:", e);
-            alert("Error al iniciar audio: " + e.message + "\n\nPor favor, asegúrate de tener conexión a internet o intenta recargar la página.");
-            startBtn.innerText = "REINTENTAR";
-            startBtn.disabled = false;
+            console.error("Error audio:", e);
+            overlay.style.display = 'none'; // Intentamos seguir de todos modos
           });
         });
 
@@ -64,14 +60,9 @@
 <body style="margin:0;overflow:hidden;">
   <div id="overlay">
     <h2>Proyecto Armiña</h2>
-    <p>Haz clic para iniciar la música y la cámara</p>
+    <p>Haz clic para iniciar la experiencia</p>
     <button id="start-btn">EMPEZAR</button>
   </div>
-
-  <audio id="ghibli-audio" loop preload="auto" crossorigin="anonymous">
-    <source src="https://ia800703.us.archive.org/11/items/GhibliPiano/01%20Merry-Go-Round%20of%20Life.mp3" type="audio/mpeg">
-    Tu navegador no soporta el elemento de audio.
-  </audio>
 
   <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" ar-logic vr-mode-ui="enabled: false">
     
