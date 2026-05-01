@@ -130,48 +130,61 @@
 
 
 
-<!-- LINEA 1 -->
-  <a-plane id="panel1" position="0 1.6 -0.05"
-    width="1.2" height="0.22" color="#880044" opacity="0.88" visible="false">
+
+
+  <!-- LINEA 1: panel + texto -->
+  <a-plane position="0 1.6 -0.01" width="1.2" height="0.22"
+    color="#880044" opacity="0"
+    animation__show="property:opacity; from:0; to:0.88; delay:500; dur:300"
+    animation__drop="property:position; from:0 2.5 -0.01; to:0 1.6 -0.01; delay:500; dur:700; easing:easeOutBounce"
+    animation__float="property:position; from:0 1.6 -0.01; to:0 1.67 -0.01; delay:1300; dir:alternate; loop:true; dur:1300; easing:easeInOutSine">
   </a-plane>
-  <a-text id="line1" value="Quieres ser"
-    position="0 1.6 0.05" align="center"
-    color="#ffffff" width="3.2"
-    visible="false">
+  <a-text value="Quieres ser" position="0 1.6 0.02" align="center"
+    color="#ffffff" width="3.2" opacity="0"
+    animation__show="property:opacity; from:0; to:1; delay:500; dur:300"
+    animation__drop="property:position; from:0 2.5 0.02; to:0 1.6 0.02; delay:500; dur:700; easing:easeOutBounce"
+    animation__float="property:position; from:0 1.6 0.02; to:0 1.67 0.02; delay:1300; dir:alternate; loop:true; dur:1300; easing:easeInOutSine">
   </a-text>
 
-  <!-- LINEA 2 -->
-  <a-plane id="panel2" position="0 1.15 -0.05"
-    width="1.0" height="0.22" color="#880044" opacity="0.88" visible="false">
+  <!-- LINEA 2: panel + texto -->
+  <a-plane position="0 1.15 -0.01" width="1.0" height="0.22"
+    color="#880044" opacity="0"
+    animation__show="property:opacity; from:0; to:0.88; delay:900; dur:300"
+    animation__drop="property:position; from:0 2.5 -0.01; to:0 1.15 -0.01; delay:900; dur:700; easing:easeOutBounce"
+    animation__float="property:position; from:0 1.15 -0.01; to:0 1.22 -0.01; delay:1700; dir:alternate; loop:true; dur:1300; easing:easeInOutSine">
   </a-plane>
-  <a-text id="line2" value="mi novia"
-    position="0 1.15 0.05" align="center"
-    color="#FFE600" width="3.4"
-    visible="false">
+  <a-text value="mi novia" position="0 1.15 0.02" align="center"
+    color="#FFE600" width="3.4" opacity="0"
+    animation__show="property:opacity; from:0; to:1; delay:900; dur:300"
+    animation__drop="property:position; from:0 2.5 0.02; to:0 1.15 0.02; delay:900; dur:700; easing:easeOutBounce"
+    animation__float="property:position; from:0 1.15 0.02; to:0 1.22 0.02; delay:1700; dir:alternate; loop:true; dur:1300; easing:easeInOutSine">
   </a-text>
 
-  <!-- LINEA 3 -->
-  <a-plane id="panel3" position="0 0.68 -0.05"
-    width="1.3" height="0.26" color="#cc0033" opacity="0.92" visible="false">
+  <!-- LINEA 3: panel + texto -->
+  <a-plane position="0 0.68 -0.01" width="1.3" height="0.26"
+    color="#cc0033" opacity="0"
+    animation__show="property:opacity; from:0; to:0.92; delay:1300; dur:300"
+    animation__drop="property:position; from:0 2.5 -0.01; to:0 0.68 -0.01; delay:1300; dur:700; easing:easeOutBounce"
+    animation__float="property:position; from:0 0.68 -0.01; to:0 0.75 -0.01; delay:2100; dir:alternate; loop:true; dur:1300; easing:easeInOutSine">
   </a-plane>
-  <a-text id="line3" value="ARMINA ?"
-    position="0 0.68 0.05" align="center"
-    color="#ffffff" width="4.0"
-    visible="false"
-    animation__pulse="property:scale; from:1 1 1; to:1.2 1.2 1.2;
-      dir:alternate; loop:true; dur:650; easing:easeInOutSine">
+  <a-text value="ARMINA ?" position="0 0.68 0.02" align="center"
+    color="#ffffff" width="4.0" opacity="0"
+    animation__show="property:opacity; from:0; to:1; delay:1300; dur:300"
+    animation__drop="property:position; from:0 2.5 0.02; to:0 0.68 0.02; delay:1300; dur:700; easing:easeOutBounce"
+    animation__float="property:position; from:0 0.68 0.02; to:0 0.75 0.02; delay:2100; dir:alternate; loop:true; dur:1300; easing:easeInOutSine"
+    animation__pulse="property:scale; from:1 1 1; to:1.2 1.2 1.2; delay:2100; dir:alternate; loop:true; dur:650">
   </a-text>
 
   <!-- CORAZONES -->
-  <a-text id="heart1" value="♥" position="-0.85 1.15 0.05"
-    color="#FF1493" width="2.0" align="center" visible="false"
-    animation__beat="property:scale; from:1 1 1; to:1.6 1.6 1.6;
-      dir:alternate; loop:true; dur:480">
+  <a-text value="♥" position="-0.85 1.15 0.02"
+    color="#FF1493" width="2.0" align="center" opacity="0"
+    animation__show="property:opacity; from:0; to:1; delay:1800; dur:400"
+    animation__beat="property:scale; from:1 1 1; to:1.6 1.6 1.6; dir:alternate; loop:true; dur:480">
   </a-text>
-  <a-text id="heart2" value="♥" position="0.85 1.15 0.05"
-    color="#FF1493" width="2.0" align="center" visible="false"
-    animation__beat="property:scale; from:1.6 1.6 1.6; to:1 1 1;
-      dir:alternate; loop:true; dur:480">
+  <a-text value="♥" position="0.85 1.15 0.02"
+    color="#FF1493" width="2.0" align="center" opacity="0"
+    animation__show="property:opacity; from:0; to:1; delay:2000; dur:400"
+    animation__beat="property:scale; from:1.6 1.6 1.6; to:1 1 1; dir:alternate; loop:true; dur:480">
   </a-text>
 
 
