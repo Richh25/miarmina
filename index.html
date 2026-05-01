@@ -24,7 +24,6 @@
       init: function () {
         this.el.sceneEl.addEventListener('loaded', function () {
 
-          // Caida con rebote para cada grupo (panel + texto juntos)
           function dropIn(panelId, textId, fromY, toY, delay) {
             var panel = document.querySelector(panelId);
             var text  = document.querySelector(textId);
@@ -33,21 +32,17 @@
                 if (!el) return;
                 el.setAttribute('visible', 'true');
                 var pos = el.getAttribute('position');
-                var x = pos.x || 0;
-                var z = pos.z || 0;
-                el.setAttribute('position', x + ' ' + fromY + ' ' + z);
                 el.setAttribute('animation__drop', {
                   property: 'position',
-                  from: x + ' ' + fromY + ' ' + z,
-                  to:   x + ' ' + toY   + ' ' + z,
-                  dur: 700,
-                  easing: 'easeOutBounce'
+                  from: pos.x + ' ' + fromY + ' ' + pos.z,
+                  to:   pos.x + ' ' + toY   + ' ' + pos.z,
+                  dur: 700, easing: 'easeOutBounce'
                 });
                 setTimeout(function () {
                   el.setAttribute('animation__float', {
                     property: 'position',
-                    from: x + ' ' + toY + ' ' + z,
-                    to:   x + ' ' + (toY + 0.07) + ' ' + z,
+                    from: pos.x + ' ' + toY + ' ' + pos.z,
+                    to:   pos.x + ' ' + (toY + 0.07) + ' ' + pos.z,
                     dir: 'alternate', loop: true,
                     dur: 1300, easing: 'easeInOutSine'
                   });
@@ -56,16 +51,15 @@
             }, delay);
           }
 
-          dropIn('#panel1', '#line1', 2.2, 1.28, 400);
-          dropIn('#panel2', '#line2', 2.2, 1.00, 850);
-          dropIn('#panel3', '#line3', 2.2, 0.70, 1300);
+          dropIn('#panel1','#line1', 2.4, 1.6,  400);
+          dropIn('#panel2','#line2', 2.4, 1.15, 850);
+          dropIn('#panel3','#line3', 2.4, 0.68, 1300);
 
-          // Corazones
           setTimeout(function () {
             var h1 = document.querySelector('#heart1');
             var h2 = document.querySelector('#heart2');
-            if (h1) h1.setAttribute('visible', 'true');
-            if (h2) h2.setAttribute('visible', 'true');
+            if (h1) h1.setAttribute('visible','true');
+            if (h2) h2.setAttribute('visible','true');
           }, 1900);
         });
       }
@@ -78,14 +72,12 @@
 
   <!-- SUSUWATARI -->
   <a-entity leg-wave>
-
     <a-circle position="0 0.01 0" radius="0.3"
       color="#000" opacity="0.2" rotation="-90 0 0"></a-circle>
 
     <a-sphere position="0 0.32 0" radius="0.3" color="#0d0d0d" roughness="1"
       animation__bounce="property:position; from:0 0.30 0; to:0 0.35 0;
-        dir:alternate; loop:true; dur:400; easing:easeInOutSine">
-    </a-sphere>
+        dir:alternate; loop:true; dur:400; easing:easeInOutSine"></a-sphere>
 
     <a-sphere position="0.27 0.32 0"      radius="0.09" color="#111"></a-sphere>
     <a-sphere position="-0.27 0.32 0"     radius="0.09" color="#111"></a-sphere>
@@ -110,11 +102,11 @@
     <a-cylinder position="-0.32 0.38 0.08" radius="0.018" height="0.22" color="#0a0a0a"
       rotation="0 0 40"
       animation="property:rotation; from:0 0 25; to:0 0 55;
-        dir:alternate; loop:true; dur:500; easing:easeInOutSine"></a-cylinder>
+        dir:alternate; loop:true; dur:500"></a-cylinder>
     <a-cylinder position="0.32 0.38 0.08"  radius="0.018" height="0.22" color="#0a0a0a"
       rotation="0 0 -40"
       animation="property:rotation; from:0 0 -25; to:0 0 -55;
-        dir:alternate; loop:true; dur:500; easing:easeInOutSine"></a-cylinder>
+        dir:alternate; loop:true; dur:500"></a-cylinder>
 
     <a-cylinder id="leg0" position="-0.12 0.05 0" radius="0.018" height="0.16" color="#0a0a0a"></a-cylinder>
     <a-cylinder id="leg1" position=" 0.12 0.05 0" radius="0.018" height="0.16" color="#0a0a0a"></a-cylinder>
@@ -124,67 +116,62 @@
       animation__aparecer="property:scale; from:0 0 0; to:1 1 1; delay:1000; dur:700; easing:easeOutElastic"
       animation__flotar="property:position; from:0.44 0.44 0.08; to:0.44 0.52 0.08;
         dir:alternate; loop:true; dur:1100; easing:easeInOutSine">
-      <a-cylinder position="0 -0.1 0"    radius="0.012" height="0.2"  color="#2e7d32"></a-cylinder>
-      <a-sphere   position="0 0.04 0"    radius="0.07"  color="#e53935" scale="1 0.7 1"></a-sphere>
-      <a-sphere   position="0.06 0.06 0" radius="0.05"  color="#ef5350" scale="1 0.6 1"></a-sphere>
-      <a-sphere   position="-0.06 0.06 0" radius="0.05" color="#ef5350" scale="1 0.6 1"></a-sphere>
-      <a-sphere   position="0 0.06 0.06" radius="0.05"  color="#e53935" scale="1 0.6 1"></a-sphere>
-      <a-sphere   position="0 0.06 -0.06" radius="0.05" color="#e53935" scale="1 0.6 1"></a-sphere>
-      <a-sphere   position="0 0.1 0"     radius="0.035" color="#b71c1c"></a-sphere>
+      <a-cylinder position="0 -0.1 0"     radius="0.012" height="0.2"  color="#2e7d32"></a-cylinder>
+      <a-sphere   position="0 0.04 0"     radius="0.07"  color="#e53935" scale="1 0.7 1"></a-sphere>
+      <a-sphere   position="0.06 0.06 0"  radius="0.05"  color="#ef5350" scale="1 0.6 1"></a-sphere>
+      <a-sphere   position="-0.06 0.06 0" radius="0.05"  color="#ef5350" scale="1 0.6 1"></a-sphere>
+      <a-sphere   position="0 0.06 0.06"  radius="0.05"  color="#e53935" scale="1 0.6 1"></a-sphere>
+      <a-sphere   position="0 0.06 -0.06" radius="0.05"  color="#e53935" scale="1 0.6 1"></a-sphere>
+      <a-sphere   position="0 0.1 0"      radius="0.035" color="#b71c1c"></a-sphere>
       <a-sphere   position="0.05 -0.05 0"  radius="0.035" color="#388e3c" scale="1.5 0.5 1" rotation="0 0 -30"></a-sphere>
       <a-sphere   position="-0.05 -0.08 0" radius="0.03"  color="#388e3c" scale="1.5 0.5 1" rotation="0 0 30"></a-sphere>
     </a-entity>
-
   </a-entity>
 
-<!-- LINEA 1 -->
-  <a-plane id="panel1" position="0 1.6 -0.01"
-    width="1.1" height="0.25" color="#1a0010" opacity="0.85" visible="false">
+  <!-- LINEA 1 -->
+  <a-plane id="panel1" position="0 1.6 -0.02"
+    width="1.2" height="0.22" color="#880044" opacity="0.88" visible="false">
   </a-plane>
-  <a-text id="line1" value="¿Quieres ser"
+  <a-text id="line1" value="Quieres ser"
     position="0 1.6 0" align="center"
-    color="#FF69B4" width="3.2"
-    font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+    color="#ffffff" width="3.2"
     visible="false">
   </a-text>
 
   <!-- LINEA 2 -->
-  <a-plane id="panel2" position="0 1.2 -0.01"
-    width="1.0" height="0.25" color="#1a0010" opacity="0.85" visible="false">
+  <a-plane id="panel2" position="0 1.15 -0.02"
+    width="1.0" height="0.22" color="#880044" opacity="0.88" visible="false">
   </a-plane>
   <a-text id="line2" value="mi novia"
-    position="0 1.2 0" align="center"
-    color="#ffffff" width="3.4"
-    font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+    position="0 1.15 0" align="center"
+    color="#FFE600" width="3.4"
     visible="false">
   </a-text>
 
   <!-- LINEA 3 -->
-  <a-plane id="panel3" position="0 0.78 -0.01"
-    width="1.3" height="0.28" color="#c0003c" opacity="0.9" visible="false">
+  <a-plane id="panel3" position="0 0.68 -0.02"
+    width="1.3" height="0.26" color="#cc0033" opacity="0.92" visible="false">
   </a-plane>
-  <a-text id="line3" value="ARMIÑA ?"
-    position="0 0.78 0" align="center"
-    color="#FFE600" width="4.2"
-    font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+  <a-text id="line3" value="ARMINA ?"
+    position="0 0.68 0" align="center"
+    color="#ffffff" width="4.0"
     visible="false"
     animation__pulse="property:scale; from:1 1 1; to:1.2 1.2 1.2;
       dir:alternate; loop:true; dur:650; easing:easeInOutSine">
   </a-text>
 
-  <!-- CORAZONES más separados -->
-  <a-text id="heart1" value="♥" position="-0.8 1.2 0"
+  <!-- CORAZONES -->
+  <a-text id="heart1" value="♥" position="-0.85 1.15 0"
     color="#FF1493" width="2.0" align="center" visible="false"
     animation__beat="property:scale; from:1 1 1; to:1.6 1.6 1.6;
       dir:alternate; loop:true; dur:480">
   </a-text>
-  <a-text id="heart2" value="♥" position="0.8 1.2 0"
+  <a-text id="heart2" value="♥" position="0.85 1.15 0"
     color="#FF1493" width="2.0" align="center" visible="false"
     animation__beat="property:scale; from:1.6 1.6 1.6; to:1 1 1;
       dir:alternate; loop:true; dur:480">
   </a-text>
 
-  
 </a-marker>
 <a-entity camera></a-entity>
 </a-scene>
