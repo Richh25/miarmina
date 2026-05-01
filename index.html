@@ -11,10 +11,22 @@
       init: function () {
         const marker = document.querySelector('a-marker');
         const content = document.querySelector('#main-content');
-        const sound = document.querySelector('#magic-sound');
         const susu = document.querySelector('#susuwatari');
+        
+        // Audio nativo para mayor compatibilidad
+        const audio = new Audio('https://cdn.pixabay.com/audio/2022/02/22/audio_d0c6ff1101.mp3');
+        audio.loop = true;
+
+        // Intentar desbloquear el audio en el primer clic del usuario
+        window.addEventListener('click', () => {
+          audio.play().then(() => {
+            audio.pause(); // Lo silenciamos hasta que aparezca el marcador
+            console.log("Audio desbloqueado");
+          }).catch(e => console.error("Error al desbloquear audio:", e));
+        }, { once: true });
 
         marker.addEventListener('markerFound', () => {
+          console.log("Marcador encontrado");
           content.setAttribute('animation__appear', {
             property: 'scale',
             from: '0 0 0',
@@ -22,30 +34,32 @@
             dur: 800,
             easing: 'easeOutElastic'
           });
-          // Reproducir sonido (requiere interacción previa con la pantalla)
-          if (sound.components.sound) {
-            sound.components.sound.stopSound();
-            sound.components.sound.playSound();
-          }
+          audio.currentTime = 0;
+          audio.play();
         });
 
         marker.addEventListener('markerLost', () => {
+          console.log("Marcador perdido");
           content.setAttribute('scale', '0 0 0');
-          if (sound.components.sound) sound.components.sound.stopSound();
+          audio.pause();
         });
 
-        // Click para saltito (2 ciclos: subir y bajar)
-        susu.addEventListener('click', () => {
+        // Click para saltito
+        const triggerJump = () => {
+          console.log("Salto activado");
           susu.setAttribute('animation__jump', {
             property: 'position',
             from: '0 0 0',
-            to: '0 0.4 0',
+            to: '0 0.5 0',
             dur: 300,
             dir: 'alternate',
             loop: 2,
             easing: 'easeOutQuad'
           });
-        });
+        };
+
+        // Escuchar clics en el susuwatari
+        susu.addEventListener('click', triggerJump);
       }
     });
   </script>
@@ -62,14 +76,13 @@
     }, { once: true });
   </script>
 
-  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" ar-logic cursor="rayOrigin: mouse;" raycaster="objects: .clickable">
+  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" ar-logic vr-mode-ui="enabled: false">
     
     <a-assets>
-      <!-- Melodía inspirada en Ghibli -->
-      <audio id="ghibli-music" src="https://cdn.pixabay.com/audio/2022/02/22/audio_d0c6ff1101.mp3" preload="auto"></audio>
+      <!-- Los assets se cargan vía JS para mayor control -->
     </a-assets>
 
-    <a-light type="ambient" color="#fff" intensity="0.6"></a-light>
+    <a-light type="ambient" color="#fff" intensity="0.7"></a-light>
     <a-light type="point" intensity="1.5" position="1 2 1" color="#fff"></a-light>
 
     <a-marker type="pattern" url="pattern-SR.patt">
@@ -77,13 +90,13 @@
       <a-entity id="main-content" scale="0 0 0">
         <a-circle position="0 0.01 0" radius="0.3" color="#000" opacity="0.2" rotation="-90 0 0"></a-circle>
 
-        <!-- Susuwatari: Se añade 'clickable' a las partes del cuerpo -->
-        <a-entity id="susuwatari">
+        <!-- Susuwatari: Se añade la clase 'clickable' a todo el conjunto -->
+        <a-entity id="susuwatari" class="clickable">
           <a-sphere class="clickable" position="0 0.32 0" radius="0.3" color="#0d0d0d"
             animation__bounce="property:position; from:0 0.30 0; to:0 0.35 0; dir:alternate; loop:true; dur:400; easing:easeInOutSine">
           </a-sphere>
 
-          <!-- Ojos (también clickables para mayor área de toque) -->
+          <!-- Ojos -->
           <a-sphere class="clickable" position="-0.11 0.36 0.26" radius="0.095" color="white"></a-sphere>
           <a-sphere class="clickable" position="0.11 0.36 0.26" radius="0.095" color="white"></a-sphere>
           
@@ -145,12 +158,10 @@
 
     </a-marker>
     <a-entity camera>
-      <!-- Entidad de sonido con la nueva melodia -->
-      <a-entity id="magic-sound" sound="src: #ghibli-music; volume: 1;"></a-entity>
+       <a-entity cursor="rayOrigin: mouse" raycaster="objects: .clickable"></a-entity>
     </a-entity>
   </a-scene>
 </body>
 
-</html>
 </html>
 
